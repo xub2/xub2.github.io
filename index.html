@@ -323,10 +323,10 @@
       gap: 5px;
     }
     .tag img {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       object-fit: contain;
-      opacity: 0.75;
+      opacity: 0.9;
     }
     .tag.highlight img {
       opacity: 1;
@@ -612,6 +612,59 @@
     }
     .footer-links a:hover { color: #fff; }
 
+    /* ── IMAGE SLIDER ── */
+    .slider-wrap {
+      overflow: hidden;
+      position: relative;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .slider-wrap::before,
+    .slider-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .slider-wrap::before {
+      left: 0;
+      background: linear-gradient(to right, var(--surface), transparent);
+    }
+    .slider-wrap::after {
+      right: 0;
+      background: linear-gradient(to left, var(--surface), transparent);
+    }
+    .slider-track {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      animation: slideLeft 28s linear infinite;
+    }
+    .slider-wrap:hover .slider-track {
+      animation-play-state: paused;
+    }
+    @keyframes slideLeft {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .slider-img {
+      height: 200px;
+      width: auto;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      object-fit: cover;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .slider-img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(27,58,107,0.15);
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -652,7 +705,7 @@
 <div class="hero">
   <div class="hero-deco"></div>
   <div class="hero-content">
-    <div class="hero-tag fade-up d1">BACKEND DEVELOPER · 신입</div>
+    <div class="hero-tag fade-up d1">BACKEND DEVELOPER</div>
     <h1 class="hero-name fade-up d2">임요섭</h1>
     <div class="hero-subtitle fade-up d3">Lim Yosup</div>
     <p class="hero-desc fade-up d4">
@@ -680,45 +733,45 @@
       <div class="skill-card-label">01 · BACKEND</div>
       <div class="skill-card-title">Backend</div>
       <div class="skill-tags">
-        <span class="tag"><img src="https://cdn.simpleicons.org/openjdk/556080" alt="">Java</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/springboot/556080" alt="">Spring Boot</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/spring/556080" alt="">Spring Framework</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/hibernate/556080" alt="">Spring Data JPA</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/hibernate/556080" alt="">Hibernate ORM</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/springsecurity/556080" alt="">Spring Security</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/thymeleaf/556080" alt="">Thymeleaf</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/html5/556080" alt="">HTML</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/css3/556080" alt="">CSS</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/java/E11F21" alt="">Java</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/spring/6DB33F" alt="">Spring Framework</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/spring/6DB33F" alt="">Spring Data JPA</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/hibernate/59666C" alt="">Hibernate ORM</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/springsecurity/6DB33F" alt="">Spring Security</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/thymeleaf/005F0F" alt="">Thymeleaf</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/html5/E34F26" alt="">HTML</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/css3/1572B6" alt="">CSS</span>
       </div>
     </div>
     <div class="skill-card">
       <div class="skill-card-label">02 · DATABASE & SEARCH</div>
       <div class="skill-card-title">Database & Search</div>
       <div class="skill-tags">
-        <span class="tag"><img src="https://cdn.simpleicons.org/postgresql/556080" alt="">PostgreSQL</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/elasticsearch/556080" alt="">Elasticsearch</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/mysql/556080" alt="">MySQL</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/redis/556080" alt="">Redis</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="">PostgreSQL</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/elasticsearch/005571" alt="">Elasticsearch</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="">MySQL</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/redis/FF4438" alt="">Redis</span>
       </div>
     </div>
     <div class="skill-card">
       <div class="skill-card-label">03 · MESSAGING & INFRA</div>
       <div class="skill-card-title">Messaging & Infra</div>
       <div class="skill-tags">
-        <span class="tag"><img src="https://cdn.simpleicons.org/apachekafka/556080" alt="">Kafka</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/docker/556080" alt="">Docker</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/git/556080" alt="">Git</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/apachekafka/231F20" alt="">Kafka</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="">Docker</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/git/F05032" alt="">Git</span>
       </div>
     </div>
     <div class="skill-card">
       <div class="skill-card-label">04 · TOOLS & COLLABORATION</div>
       <div class="skill-card-title">Tools & Collaboration</div>
       <div class="skill-tags">
-        <span class="tag"><img src="https://cdn.simpleicons.org/slack/556080" alt="">Slack</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/notion/556080" alt="">Notion</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/anthropic/556080" alt="">Claude</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/googlegemini/556080" alt="">Gemini</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/openai/556080" alt="">Codex</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/slack/4A154B" alt="">Slack</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/notion/000000" alt="">Notion</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/anthropic/D97757" alt="">Claude</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/googlegemini/8E75B2" alt="">Gemini</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/openai/000000" alt="">Codex</span>
       </div>
     </div>
   </div>
@@ -752,6 +805,25 @@
         <span class="project-badge">🏆 최우수 프로젝트 1위</span>
         <a href="https://github.com/prgrms-be-advdevcourse/beadv5_5_ChamomileChicken_BE"
            target="_blank" class="btn btn-ghost" style="font-size:11px;padding:8px 16px;">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="slider-wrap">
+      <div class="slider-track">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img1.png" alt="Jaba Class 스크린샷 1">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img2.png" alt="Jaba Class 스크린샷 2">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img3.png" alt="Jaba Class 스크린샷 3">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img4.png" alt="Jaba Class 스크린샷 4">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img5.png" alt="Jaba Class 스크린샷 5">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img6.png" alt="Jaba Class 스크린샷 6">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img7.png" alt="Jaba Class 스크린샷 7">
+        <!-- 무한 루프용 복제 -->
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img1.png" alt="">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img2.png" alt="">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img3.png" alt="">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img4.png" alt="">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img5.png" alt="">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img6.png" alt="">
+        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/img7.png" alt="">
       </div>
     </div>
     <div class="project-challenges">
