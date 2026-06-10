@@ -852,6 +852,63 @@
       box-shadow: 0 8px 24px rgba(27,58,107,0.15);
     }
 
+    /* ── SCROLL DOWN ── */
+    .scroll-down {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      text-decoration: none;
+      animation: bounceDown 2s ease-in-out infinite;
+      z-index: 10;
+    }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ── TOP BUTTON ── */
+    .top-btn {
+      position: fixed;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      width: auto;
+      height: auto;
+      padding: 10px 28px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 200;
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      box-shadow: 0 8px 24px rgba(27,58,107,0.35);
+    }
+    .top-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .top-btn:hover {
+      background: var(--navy-mid);
+      box-shadow: 0 12px 32px rgba(27,58,107,0.45);
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -910,6 +967,15 @@
     </div>
   </div>
 </div>
+
+<a href="#skills" class="scroll-down">
+  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="8,12 22,28 36,12" stroke="var(--navy)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:-18px;opacity:0.35;">
+    <polyline points="8,12 22,28 36,12" stroke="var(--navy)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</a>
 
 <div class="full-divider"></div>
 
@@ -1293,6 +1359,14 @@
   </div>
 </div>
 
+<!-- TOP BUTTON -->
+<a href="#" class="top-btn" id="topBtn" aria-label="맨 위로">
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="2,10 7,4 12,10" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  TOP
+</a>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-text">© 2026 임요섭 · Backend Developer</div>
@@ -1305,4 +1379,11 @@
 </footer>
 
 </body>
+<script>
+  const topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', () => {
+    const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+    topBtn.classList.toggle('visible', scrolledToBottom);
+  });
+</script>
 </html>
