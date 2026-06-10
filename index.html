@@ -111,8 +111,8 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+              linear-gradient(var(--border) 1px, transparent 1px),
+              linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 40px 40px;
       opacity: 0.5;
     }
@@ -202,7 +202,8 @@
     .btn-secondary {
       background: transparent;
       color: var(--navy);
-      border: 1.5px solid var(--navy);
+      border: 2px solid var(--navy);
+      font-weight: 700;
     }
     .btn-secondary:hover {
       background: var(--navy-pale);
@@ -317,6 +318,18 @@
       color: var(--text-muted);
       border-radius: 3px;
       background: var(--bg);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .tag img {
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+      opacity: 0.75;
+    }
+    .tag.highlight img {
+      opacity: 1;
     }
 
     .tag.highlight {
@@ -664,35 +677,50 @@
   <h2 class="section-title">기술 스택</h2>
   <div class="skills-grid">
     <div class="skill-card">
-      <div class="skill-card-label">CORE</div>
+      <div class="skill-card-label">01 · BACKEND</div>
       <div class="skill-card-title">Backend</div>
       <div class="skill-tags">
-        <span class="tag highlight">Java</span>
-        <span class="tag highlight">Spring Boot</span>
-        <span class="tag highlight">Spring Data JPA</span>
-        <span class="tag">Spring Security</span>
-        <span class="tag">Spring Cloud Gateway</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/openjdk/556080" alt="">Java</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/springboot/556080" alt="">Spring Boot</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/spring/556080" alt="">Spring Framework</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/hibernate/556080" alt="">Spring Data JPA</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/hibernate/556080" alt="">Hibernate ORM</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/springsecurity/556080" alt="">Spring Security</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/thymeleaf/556080" alt="">Thymeleaf</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/html5/556080" alt="">HTML</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/css3/556080" alt="">CSS</span>
       </div>
     </div>
     <div class="skill-card">
-      <div class="skill-card-label">DATABASE</div>
-      <div class="skill-card-title">데이터베이스 & 검색</div>
+      <div class="skill-card-label">02 · DATABASE & SEARCH</div>
+      <div class="skill-card-title">Database & Search</div>
       <div class="skill-tags">
-        <span class="tag highlight">PostgreSQL</span>
-        <span class="tag highlight">Elasticsearch</span>
-        <span class="tag">MySQL</span>
-        <span class="tag">Redis</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/postgresql/556080" alt="">PostgreSQL</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/elasticsearch/556080" alt="">Elasticsearch</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/mysql/556080" alt="">MySQL</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/redis/556080" alt="">Redis</span>
       </div>
     </div>
     <div class="skill-card">
-      <div class="skill-card-label">MESSAGING</div>
-      <div class="skill-card-title">이벤트 & 메시지</div>
+      <div class="skill-card-label">03 · MESSAGING & INFRA</div>
+      <div class="skill-card-title">Messaging & Infra</div>
       <div class="skill-tags">
-        <span class="tag highlight">Kafka</span>
-        <span class="tag">Outbox Pattern</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/apachekafka/556080" alt="">Kafka</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/docker/556080" alt="">Docker</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/git/556080" alt="">Git</span>
       </div>
     </div>
-
+    <div class="skill-card">
+      <div class="skill-card-label">04 · TOOLS & COLLABORATION</div>
+      <div class="skill-card-title">Tools & Collaboration</div>
+      <div class="skill-tags">
+        <span class="tag"><img src="https://cdn.simpleicons.org/slack/556080" alt="">Slack</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/notion/556080" alt="">Notion</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/anthropic/556080" alt="">Claude</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/googlegemini/556080" alt="">Gemini</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/openai/556080" alt="">Codex</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -841,6 +869,10 @@
     <div class="info-cell">
       <div class="info-cell-label">EMAIL</div>
       <div class="info-cell-value"><a href="mailto:yoxup.lim@gmail.com">yoxup.lim@gmail.com</a></div>
+    </div>
+    <div class="info-cell">
+      <div class="info-cell-label">PHONE</div>
+      <div class="info-cell-value"><a href="tel:01091394102">010-9139-4102</a></div>
     </div>
 
     <div class="info-cell">
