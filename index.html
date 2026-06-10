@@ -541,6 +541,10 @@
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
     @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; gap: 40px; } }
 
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+    @media (max-width: 1024px) { .three-col { grid-template-columns: 1fr 1fr; gap: 40px; } }
+    @media (max-width: 600px) { .three-col { grid-template-columns: 1fr; gap: 32px; } }
+
     .col-label {
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px;
@@ -918,7 +922,7 @@
       <div class="skill-card-label">01 · BACKEND</div>
       <div class="skill-card-title">Backend</div>
       <div class="skill-tags">
-        <span class="tag"><img src="https://cdn.simpleicons.org/java/E11F21" alt="">Java</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java</span>
         <span class="tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot</span>
         <span class="tag"><img src="https://cdn.simpleicons.org/spring/6DB33F" alt="">Spring Framework</span>
         <span class="tag"><img src="https://cdn.simpleicons.org/spring/6DB33F" alt="">Spring Data JPA</span>
@@ -926,7 +930,7 @@
         <span class="tag"><img src="https://cdn.simpleicons.org/springsecurity/6DB33F" alt="">Spring Security</span>
         <span class="tag"><img src="https://cdn.simpleicons.org/thymeleaf/005F0F" alt="">Thymeleaf</span>
         <span class="tag"><img src="https://cdn.simpleicons.org/html5/E34F26" alt="">HTML</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/css3/1572B6" alt="">CSS</span>
+        <span class="tag"><img src="https://cdn.simpleicons.org/css/1572B6" alt="">CSS</span>
       </div>
     </div>
     <div class="skill-card">
@@ -952,11 +956,10 @@
       <div class="skill-card-label">04 · TOOLS & COLLABORATION</div>
       <div class="skill-card-title">Tools & Collaboration</div>
       <div class="skill-tags">
-        <span class="tag"><img src="https://cdn.simpleicons.org/slack/4A154B" alt="">Slack</span>
+        <span class="tag"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/slack.svg" style="filter: invert(18%) sepia(90%) saturate(2000%) hue-rotate(320deg) brightness(90%);" alt="">Slack</span>
         <span class="tag"><img src="https://cdn.simpleicons.org/notion/000000" alt="">Notion</span>
         <span class="tag"><img src="https://cdn.simpleicons.org/anthropic/D97757" alt="">Claude</span>
         <span class="tag"><img src="https://cdn.simpleicons.org/googlegemini/8E75B2" alt="">Gemini</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/openai/000000" alt="">Codex</span>
       </div>
     </div>
   </div>
@@ -1217,7 +1220,7 @@
     </div>
   </div>
 
-  <div class="two-col">
+  <div class="three-col">
     <div>
       <div class="col-label">EDUCATION</div>
       <div class="timeline">
@@ -1244,6 +1247,12 @@
         <div class="timeline-item highlight">
           <div class="timeline-date">2026.05</div>
           <div class="timeline-name">프로그래머스 데브코스 최우수 프로젝트 (1위)</div>
+          <div class="timeline-detail">(주) 그렙</div>
+        </div>
+        <div class="timeline-item highlight">
+          <div class="timeline-date">2026.05</div>
+          <div class="timeline-name">프로그래머스 데브코스 최우수 팀장</div>
+          <div class="timeline-detail">(주) 그렙</div>
         </div>
         <div class="timeline-item">
           <div class="timeline-date">2025.06</div>
@@ -1253,11 +1262,31 @@
         <div class="timeline-item">
           <div class="timeline-date">2024.12</div>
           <div class="timeline-name">SQL 개발자 (SQLD)</div>
+          <div class="timeline-detail">한국데이터산업진흥원</div>
         </div>
         <div class="timeline-item">
           <div class="timeline-date">4년+</div>
           <div class="timeline-name">기술 블로그 270편 이상</div>
           <div class="timeline-detail">bdisappointed.tistory.com</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="col-label">MILITARY & ETC</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2020.07 — 2022.01</div>
+          <div class="timeline-name">육군 병장 만기 제대</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2021.12</div>
+          <div class="timeline-name">1종대형 운전면허</div>
+          <div class="timeline-detail">경찰청 (운전면허시험관리단)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2021.11</div>
+          <div class="timeline-name">버스운전자격</div>
+          <div class="timeline-detail">한국교통안전공단</div>
         </div>
       </div>
     </div>
