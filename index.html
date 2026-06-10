@@ -542,6 +542,84 @@
     }
     .info-cell-value a:hover { text-decoration: underline; }
 
+    /* ── ABOUT PROFILE ── */
+    .about-profile {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 56px;
+    }
+
+    .profile-img {
+      width: 160px;
+      height: 213px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .profile-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .profile-name span {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+    }
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+    }
+    .profile-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .profile-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      width: 60px;
+      flex-shrink: 0;
+      font-weight: 700;
+    }
+
+    .profile-value {
+      font-size: 15px;
+      color: var(--navy);
+      font-weight: 700;
+    }
+    .profile-value a {
+      color: var(--navy);
+      text-decoration: none;
+    }
+    .profile-value a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .about-profile { flex-direction: column; gap: 28px; }
+      .profile-img { width: 120px; height: 150px; }
+    }
+
     /* ── TIMELINE ── */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
     @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; gap: 40px; } }
@@ -1274,23 +1352,26 @@
   <div class="section-label">ABOUT</div>
   <h2 class="section-title">소개</h2>
 
-  <div class="info-grid">
-    <div class="info-cell">
-      <div class="info-cell-label">EMAIL</div>
-      <div class="info-cell-value"><a href="mailto:yoxup.lim@gmail.com">yoxup.lim@gmail.com</a></div>
-    </div>
-    <div class="info-cell">
-      <div class="info-cell-label">PHONE</div>
-      <div class="info-cell-value"><a href="tel:01091394102">010-9139-4102</a></div>
-    </div>
-
-    <div class="info-cell">
-      <div class="info-cell-label">GITHUB</div>
-      <div class="info-cell-value"><a href="https://github.com/xub2" target="_blank">github.com/xub2</a></div>
-    </div>
-    <div class="info-cell">
-      <div class="info-cell-label">BLOG</div>
-      <div class="info-cell-value"><a href="https://bdisappointed.tistory.com" target="_blank">bdisappointed.tistory.com</a></div>
+  <div class="about-profile">
+    <img class="profile-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/xuv.jpg" alt="임요섭 프로필 사진">
+    <div class="profile-info">
+      <div class="profile-name">임요섭 <span>Lim Yosup</span></div>
+      <div class="profile-row">
+        <span class="profile-label">EMAIL</span>
+        <span class="profile-value"><a href="mailto:yoxup.lim@gmail.com">yoxup.lim@gmail.com</a></span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">PHONE</span>
+        <span class="profile-value"><a href="tel:01091394102">010-9139-4102</a></span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">GITHUB</span>
+        <span class="profile-value"><a href="https://github.com/xub2" target="_blank">github.com/xub2</a></span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">BLOG</span>
+        <span class="profile-value"><a href="https://bdisappointed.tistory.com" target="_blank">bdisappointed.tistory.com</a></span>
+      </div>
     </div>
   </div>
 
