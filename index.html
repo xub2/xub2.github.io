@@ -605,6 +605,59 @@
       font-size: 8px;
     }
 
+    .challenge-arch {
+      margin-top: 16px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .challenge-arch img {
+      height: 80px;
+      width: auto;
+      max-width: 160px;
+      object-fit: cover;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      cursor: zoom-in;
+      transition: opacity 0.2s, border-color 0.2s;
+      display: block;
+    }
+    .challenge-arch img:hover {
+      opacity: 0.85;
+      border-color: var(--navy-light);
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px; right: 28px;
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+
     /* ── ABOUT ── */
     .info-grid {
       display: grid;
@@ -1027,7 +1080,7 @@
       border: 1px solid var(--border);
       object-fit: cover;
       flex-shrink: 0;
-      cursor: pointer;
+      cursor: zoom-in;
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .slider-img:hover {
@@ -1351,7 +1404,6 @@
                 <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/redis/FF4438" alt="">Redis</span>
                 <span class="project-stack-tag">Resilience4j</span>
                 <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="">Docker</span>
-                <span class="project-stack-tag">QueryDSL</span>
               </div>
             </div>
           </div>
@@ -1391,6 +1443,9 @@
           <div class="challenge-headline">검색 트래픽 집중 — Elasticsearch 도입으로 p95 31% 개선</div>
           <div class="challenge-body">JPA LIKE → PostgreSQL GIN 인덱스 순서로 DB 자체 최적화를 먼저 검증한 뒤 한계를 수치로 확인 후 ES 도입 결정. nori 형태소 분석기 + fuzziness:AUTO 적용으로 한국어 검색 품질 동시 확보.</div>
           <div class="challenge-result">p95 1,879ms → 1,294ms · 실패율 0% · 데이터 100배 증가 시 ES +85% vs DB +153%</div>
+          <div class="challenge-arch">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-1.png" alt="검색 최적화 아키텍처">
+          </div>
         </div>
       </div>
 
@@ -1400,6 +1455,10 @@
           <div class="challenge-headline">ES Dynamic Mapping nori 누락 — @PostConstruct 초기화 순서 보장</div>
           <div class="challenge-body">Kafka consumer가 인덱스 초기화보다 먼저 실행되어 잘못된 매핑이 디스크에 영속화. @PostConstruct로 전환하여 Kafka consumer 등록 전 인덱스 초기화가 반드시 선행되도록 보장.</div>
           <div class="challenge-result">명시적 매핑 선생성으로 Dynamic Mapping 차단 · 재발 방지 설계</div>
+          <div class="challenge-arch">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-2-1.png" alt="Dynamic Mapping 문제 아키텍처">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-2-2.png" alt="Dynamic Mapping 해결 아키텍처">
+          </div>
         </div>
       </div>
 
@@ -1409,6 +1468,9 @@
           <div class="challenge-headline">ES 단일 장애점(SPOF) 제거 — Resilience4j 서킷 브레이커 + Fallback</div>
           <div class="challenge-body">ES 컨테이너 강제 종료(카오스 테스트)로 실제 장애 재현. socket-timeout 2s 설정으로 무한 대기 선제 차단, 장애 중 PostgreSQL fallback 조회로 무중단 제공.</div>
           <div class="challenge-result">장애 중 실패율 0% · 최대 지연 3,259ms → 2,000ms 단축</div>
+          <div class="challenge-arch">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-3.png" alt="서킷 브레이커 아키텍처">
+          </div>
         </div>
       </div>
 
@@ -1418,6 +1480,9 @@
           <div class="challenge-headline">MSA 데이터 정합성 — Outbox 패턴으로 이벤트 유실 0% 보장</div>
           <div class="challenge-body">DB 저장과 Kafka 발행을 동일 트랜잭션 내 outbox_events 테이블로 원자적 처리. FOR UPDATE SKIP LOCKED으로 다중 인스턴스 중복 발행 방지, DLQ로 문제 메시지 격리.</div>
           <div class="challenge-result">이벤트 유실 0% · Kafka 브로커 재기동 후 자동 재발행</div>
+          <div class="challenge-arch">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-4.png" alt="Outbox 패턴 아키텍처">
+          </div>
         </div>
       </div>
 
@@ -1427,6 +1492,9 @@
           <div class="challenge-headline">ES 색인 컨슈머 자연 멱등성 — 별도 인프라 없이 이중 색인 0건</div>
           <div class="challenge-body">ES document ID upsert 특성 활용 — save/saveAll 재실행 시 덮어쓰기, deleteById 부재 시 무시. processed_events 테이블 없이 at-least-once 환경에서 중복 수신 안전성 확보.</div>
           <div class="challenge-result">이중 색인 0건 · 추가 인프라 비용 없음</div>
+          <div class="challenge-arch">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-5.png" alt="멱등성 아키텍처">
+          </div>
         </div>
       </div>
     </div>
@@ -1491,6 +1559,9 @@
           <div class="challenge-headline">동시 출석 등록 Race Condition — DB Unique 제약으로 중복률 0% 달성</div>
           <div class="challenge-body">@Column(unique=true)로 InnoDB 묵시적 락을 통한 INSERT 직렬화. DataIntegrityViolationException → IllegalStateException 변환. 동명이인은 차단이 아닌 분기 처리로 정상 인원 누락 방지.</div>
           <div class="challenge-result">데이터 중복률 0% · 무결성 100%</div>
+          <div class="challenge-arch">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/2-1.png" alt="Race Condition 해결 아키텍처">
+          </div>
         </div>
       </div>
 
@@ -1500,6 +1571,9 @@
           <div class="challenge-headline">전체 인원 일괄 갱신 1+N 쿼리 — JPA 벌크 연산으로 N회 → 1회 단축</div>
           <div class="challenge-body">@Modifying(flushAutomatically=true) + 커스텀 JPQL로 영속성 컨텍스트 우회. 대규모 갱신 시 메모리 과부하 및 트랜잭션 타임아웃 위험 사전 차단.</div>
           <div class="challenge-result">쿼리 실행 횟수 N회 → 1회</div>
+          <div class="challenge-arch">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/2-2.png" alt="벌크 연산 아키텍처">
+          </div>
         </div>
       </div>
 
@@ -1509,6 +1583,9 @@
           <div class="challenge-headline">소그룹 편성 자동화 — 다중 필터링 기반 랜덤 알고리즘 구현</div>
           <div class="challenge-body">isExcluded / isHard 속성 기반 2단계 필터링 후 Collections.shuffle() 난수 배정. 특수 조건 인원을 각 목장에 균등 선배치 후 일반 인원 라운드로빈 분배. 필터링 파이프라인 구조로 신규 조건 추가 시 확장성 확보.</div>
           <div class="challenge-result">수동 편성 → 클릭 1회 자동화 · 편성 공평성 기술적 보장</div>
+          <div class="challenge-arch">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/2-3.png" alt="소그룹 편성 알고리즘 아키텍처">
+          </div>
         </div>
       </div>
     </div>
@@ -1637,6 +1714,12 @@
   </div>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightboxClose">✕</span>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
 </body>
 <script>
   const topBtn = document.getElementById('topBtn');
@@ -1644,5 +1727,27 @@
     const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
     topBtn.classList.toggle('visible', scrolledToBottom);
   });
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+
+  document.querySelectorAll('.challenge-arch img, .slider-img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target !== lightboxImg) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 </html>
