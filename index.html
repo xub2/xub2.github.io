@@ -1,1753 +1,2039 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>임요섭 — Backend Developer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg:          #ffffff;
-      --surface:     #f7f8fb;
-      --surface2:    #eef1f7;
-      --border:      #dde2ed;
-      --navy:        #1b3a6b;
-      --navy-mid:    #2a5298;
-      --navy-light:  #3d6bbf;
-      --navy-pale:   #e8eef8;
-      --navy-xpale:  #f2f5fc;
-      --text:        #111827;
-      --text-muted:  #556080;
-      --text-dim:    #a0aec0;
-    }
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>임요섭 — Backend Developer</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+      <style>
+        :root {
+          --bg:          #ffffff;
+          --surface:     #f7f8fb;
+          --surface2:    #eef1f7;
+          --border:      #dde2ed;
+          --navy:        #1b3a6b;
+          --navy-mid:    #2a5298;
+          --navy-light:  #3d6bbf;
+          --navy-pale:   #e8eef8;
+          --navy-xpale:  #f2f5fc;
+          --text:        #111827;
+          --text-muted:  #556080;
+          --text-dim:    #a0aec0;
+          --hero-bg:     #f8faff;
+          --nav-bg:      rgba(255,255,255,0.92);
+        }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+        [data-theme="dark"] {
+          --bg:          #0f1117;
+          --surface:     #181c27;
+          --surface2:    #1f2436;
+          --border:      #2a3148;
+          --navy:        #5b8de8;
+          --navy-mid:    #7aaaf0;
+          --navy-light:  #94baf7;
+          --navy-pale:   #1a2540;
+          --navy-xpale:  #141c32;
+          --text:        #e2e8f4;
+          --text-muted:  #94a3b8;
+          --text-dim:    #4a5568;
+          --hero-bg:     #0d1117;
+          --nav-bg:      rgba(15,17,23,0.92);
+        }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Noto Sans KR', sans-serif;
-      font-weight: 300;
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+          background: var(--bg);
+          color: var(--text);
+          font-family: 'Noto Sans KR', sans-serif;
+          font-weight: 300;
+          line-height: 1.7;
+          overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        nav {
+          position: fixed;
+          top: 0; left: 0; right: 0;
+          z-index: 100;
+          padding: 0 48px;
+          height: 60px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: var(--nav-bg);
+          backdrop-filter: blur(12px);
+          border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 13px;
+          color: var(--navy);
+          font-weight: 700;
+          letter-spacing: 0.05em;
+        }
+
+        .nav-dot {
+          display: inline-block;
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: var(--navy-light);
+          margin-left: 4px;
+          vertical-align: middle;
+          animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          color: var(--text-muted);
+          text-decoration: none;
+          letter-spacing: 0.1em;
+          transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--navy); }
+
+        .theme-toggle {
+          position: fixed;
+          bottom: 32px;
+          right: 32px;
+          z-index: 200;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          border: 1.5px solid var(--border);
+          background: var(--surface);
+          color: var(--text);
+          cursor: pointer;
+          font-size: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+          transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+          transform: scale(1.1);
+          box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+          border-color: var(--navy);
+        }
+
+        /* ── HERO ── */
+        .hero {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 100px 48px 80px;
+          position: relative;
+          overflow: hidden;
+          background: var(--hero-bg);
+        }
+
+        .hero-blob {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(80px);
+          z-index: 0;
+          animation: blobFloat 8s ease-in-out infinite;
+        }
+        .hero-blob-1 {
+          width: 520px; height: 520px;
+          top: -100px; left: -80px;
+          background: radial-gradient(circle, rgba(61,107,191,0.18) 0%, transparent 70%);
+          animation-delay: 0s;
+        }
+        .hero-blob-2 {
+          width: 420px; height: 420px;
+          bottom: -80px; right: -60px;
+          background: radial-gradient(circle, rgba(27,58,107,0.13) 0%, transparent 70%);
+          animation-delay: -3s;
+        }
+        .hero-blob-3 {
+          width: 300px; height: 300px;
+          top: 40%; left: 55%;
+          background: radial-gradient(circle, rgba(100,140,220,0.10) 0%, transparent 70%);
+          animation-delay: -5s;
+        }
+        @keyframes blobFloat {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33%       { transform: translate(20px, -30px) scale(1.04); }
+          66%       { transform: translate(-15px, 20px) scale(0.97); }
+        }
+
+        /* 레거시 hero-deco — 숨김 */
+        .hero-deco { display: none; }
+
+        .hero-content {
+          position: relative;
+          z-index: 1;
+          max-width: 1100px;
+          width: 100%;
+          display: grid;
+          grid-template-columns: 3fr 2fr;
+          gap: 64px;
+          align-items: stretch;
+        }
+
+        /* ── 왼쪽 컬럼 ── */
+        .hero-left {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero-tag {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          color: var(--navy-mid);
+          letter-spacing: 0.25em;
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .hero-tag::before {
+          content: '';
+          width: 32px; height: 2px;
+          background: var(--navy);
+        }
+
+        .hero-name {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(72px, 9vw, 130px);
+          line-height: 0.9;
+          letter-spacing: 0.02em;
+          color: var(--navy);
+          margin-bottom: 6px;
+        }
+
+        .hero-subtitle {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(22px, 3vw, 40px);
+          color: var(--text-dim);
+          letter-spacing: 0.12em;
+          margin-bottom: 0;
+        }
+
+        .hero-divider {
+          width: 100%;
+          height: 1px;
+          background: var(--border);
+          margin: 28px 0;
+        }
+
+        .hero-desc {
+          font-size: 13.5px;
+          color: var(--text-muted);
+          line-height: 1.9;
+          border-left: 3px solid var(--navy);
+          padding-left: 18px;
+          word-break: keep-all;
+          text-align: left;
+          margin-bottom: 32px;
+        }
+
+        .hero-links {
+          display: flex;
+          gap: 20px;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+        }
+
+        /* ── 오른쪽 컬럼 ── */
+        .hero-right-col {
+          position: relative;
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          padding-top: 220px;
+        }
+
+
+        .hero-photo {
+          position: relative;
+          z-index: 1;
+          width: 220px;
+          height: 280px;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 16px 48px rgba(27,58,107,0.20);
+          margin: 24px;
+        }
+        .hero-photo img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+          display: block;
+        }
+
+        .hero-btn-group {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .hero-btn-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.25em;
+          color: var(--navy-mid);
+        }
+
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 24px;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          letter-spacing: 0.1em;
+          text-decoration: none;
+          border-radius: 3px;
+          transition: all 0.2s;
+          cursor: pointer;
+          border: none;
+        }
+
+        .btn-primary {
+          background: var(--navy);
+          color: #fff;
+          font-weight: 700;
+          border: 2px solid transparent;
+        }
+        .btn-primary:hover {
+          background: var(--navy-mid);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(27,58,107,0.25);
+        }
+
+        .btn-secondary {
+          background: transparent;
+          color: var(--navy);
+          border: 2px solid var(--navy);
+          font-weight: 700;
+        }
+        .btn-secondary:hover {
+          background: var(--navy-pale);
+          transform: translateY(-2px);
+        }
+
+        /* ── DOWNLOAD BUTTONS ── */
+        .btn-download {
+          padding: 18px 40px;
+          font-size: 15px;
+          width: 280px;
+          justify-content: center;
+          letter-spacing: 0.08em;
+          border-radius: 6px;
+          position: relative;
+          overflow: hidden;
+        }
+        .btn-download::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
+          transform: translateX(-100%);
+          transition: transform 0.5s ease;
+        }
+        .btn-download:hover::before {
+          transform: translateX(100%);
+        }
+        .btn-download.btn-primary {
+          background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+          box-shadow: 0 4px 16px rgba(27,58,107,0.30);
+        }
+        .btn-download.btn-primary:hover {
+          background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 100%);
+          transform: translateY(-3px);
+          box-shadow: 0 10px 28px rgba(27,58,107,0.40);
+        }
+        .btn-download.btn-secondary {
+          border-width: 2px;
+          box-shadow: 0 2px 10px rgba(27,58,107,0.12);
+        }
+        .btn-download.btn-secondary:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 28px rgba(27,58,107,0.20);
+          background: var(--navy-pale);
+        }
+
+        .btn-ghost {
+          background: transparent;
+          color: var(--text-muted);
+          border: 1.5px solid var(--border);
+        }
+        .btn-ghost:hover {
+          border-color: var(--navy-light);
+          color: var(--navy);
+        }
+
+        /* ── SECTION COMMON ── */
+        .section-wrap {
+          padding: 96px 48px;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .section-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          color: var(--navy-mid);
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          margin-bottom: 12px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .section-label::before {
+          content: '';
+          width: 20px; height: 2px;
+          background: var(--navy);
+        }
+
+        .section-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(36px, 5.5vw, 64px);
+          line-height: 1;
+          margin-bottom: 56px;
+          color: var(--navy);
+          letter-spacing: 0.03em;
+        }
+
+        .full-divider {
+          width: 100%;
+          height: 1px;
+          background: var(--border);
+        }
+
+        /* ── SKILLS ── */
+        .skills-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+        }
+
+        @media (max-width: 1024px) {
+          .skills-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+          .skills-grid { grid-template-columns: 1fr; }
+        }
+
+        .skill-card {
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 6px;
+          padding: 28px;
+          transition: all 0.2s;
+          position: relative;
+          overflow: hidden;
+        }
+        .skill-card::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0;
+          width: 3px; height: 100%;
+          background: var(--navy);
+          opacity: 0;
+          transition: opacity 0.2s;
+        }
+        .skill-card:hover {
+          box-shadow: 0 4px 20px rgba(27,58,107,0.08);
+          transform: translateY(-2px);
+        }
+
+        .skill-card-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 9px;
+          color: var(--navy-mid);
+          letter-spacing: 0.25em;
+          margin-bottom: 8px;
+        }
+
+        .skill-card-title {
+          font-size: 14px;
+          font-weight: 700;
+          margin-bottom: 14px;
+          color: var(--navy);
+        }
+
+        .skill-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+
+        .tag {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 12px;
+          padding: 6px 12px;
+          border: 1px solid var(--border);
+          color: var(--text-muted);
+          border-radius: 4px;
+          background: var(--bg);
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .tag img {
+          width: 17px;
+          height: 17px;
+          object-fit: contain;
+          opacity: 0.9;
+        }
+        .tag.highlight img {
+          opacity: 1;
+        }
+
+        .tag.highlight {
+          border-color: rgba(27,58,107,0.35);
+          color: var(--navy);
+          background: var(--navy-pale);
+          font-weight: 500;
+        }
+
+        .section-desc {
+          font-size: 14px;
+          color: var(--text-muted);
+          margin-top: -36px;
+          margin-bottom: 40px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .section-desc::before {
+          content: '※';
+          font-size: 12px;
+          color: var(--navy-mid);
+        }
+
+        /* ── PROJECTS ── */
+        .project-card {
+          background: var(--bg);
+          border: 1px solid var(--border);
+          border-radius: 8px;
+          margin-bottom: 20px;
+          overflow: hidden;
+          transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .project-card:hover {
+          border-color: var(--navy-light);
+          box-shadow: 0 8px 32px rgba(27,58,107,0.1);
+        }
+
+        .project-header {
+          padding: 40px 40px 32px;
+          display: grid;
+          grid-template-columns: 1fr auto;
+          gap: 24px;
+          align-items: start;
+        }
+
+        .project-number {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 72px;
+          line-height: 1;
+          margin-bottom: 4px;
+          color: var(--navy);
+        }
+
+        .project-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(24px, 3.5vw, 42px);
+          line-height: 1.1;
+          margin-bottom: 14px;
+          color: var(--navy);
+        }
+
+        .project-meta {
+          display: flex;
+          gap: 20px;
+          flex-wrap: wrap;
+          margin-bottom: 16px;
+        }
+
+        .project-meta-item {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          color: var(--text-muted);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .project-meta-item::before {
+          content: '';
+          width: 4px; height: 4px;
+          border-radius: 50%;
+          background: var(--navy-light);
+        }
+
+        .project-desc {
+          font-size: 14px;
+          color: var(--text-muted);
+          line-height: 1.8;
+          max-width: 600px;
+        }
+
+        .project-detail {
+          margin-top: 20px;
+        }
+        .project-detail-row {
+          display: grid;
+          grid-template-columns: 80px 1fr;
+          gap: 16px;
+          padding: 12px 0;
+          border-top: 1px solid var(--border);
+          align-items: start;
+        }
+        .project-detail-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          color: var(--navy-mid);
+          letter-spacing: 0.2em;
+          padding-top: 3px;
+        }
+        .project-detail-content {
+          font-size: 13px;
+          color: var(--text-muted);
+          line-height: 1.75;
+          word-break: keep-all;
+        }
+        .project-detail-content ul {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+        }
+        .project-detail-content ul li::before {
+          content: '—';
+          margin-right: 8px;
+          color: var(--navy-light);
+        }
+        .project-stack-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .project-stack-tag {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          background: var(--navy-xpale);
+          color: var(--navy-mid);
+          border: 1px solid var(--navy-pale);
+          padding: 3px 10px;
+          border-radius: 3px;
+          letter-spacing: 0.05em;
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+        }
+        .project-stack-tag img {
+          width: 13px;
+          height: 13px;
+          object-fit: contain;
+          opacity: 0.85;
+        }
+
+        .project-badge {
+          background: var(--navy);
+          color: #fff;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          padding: 6px 14px;
+          border-radius: 3px;
+          white-space: nowrap;
+          letter-spacing: 0.1em;
+        }
+
+        .project-challenges {
+          padding: 0 40px 36px;
+          border-top: 1px solid var(--border);
+          background: var(--surface);
+        }
+
+        .challenge-title {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 13px;
+          color: var(--navy-mid);
+          letter-spacing: 0.25em;
+          padding: 20px 0 16px;
+          border-bottom: 1px solid var(--border);
+          margin-bottom: 4px;
+        }
+
+        .challenge-item {
+          display: grid;
+          grid-template-columns: 28px 1fr;
+          gap: 16px;
+          padding: 20px 0;
+          border-bottom: 1px solid var(--border);
+          align-items: start;
+        }
+        .challenge-item:last-child { border-bottom: none; }
+
+        .challenge-idx {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 18px;
+          color: var(--navy-light);
+          font-weight: 700;
+          line-height: 1.2;
+        }
+
+        .challenge-headline {
+          font-size: 15px;
+          font-weight: 700;
+          color: var(--navy);
+          margin-bottom: 6px;
+          line-height: 1.5;
+        }
+
+        .challenge-body {
+          font-size: 13px;
+          color: var(--text-muted);
+          line-height: 1.8;
+        }
+
+        .cb-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 4px;
       line-height: 1.7;
-      overflow-x: hidden;
     }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 0 48px;
-      height: 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
+    .cb-label {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      color: var(--navy);
-      font-weight: 700;
-      letter-spacing: 0.05em;
-    }
-
-    .nav-dot {
-      display: inline-block;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--navy-light);
-      margin-left: 4px;
-      vertical-align: middle;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
-
-    .nav-links { display: flex; gap: 32px; }
-    .nav-links a {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--navy); }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 100px 48px 80px;
-      position: relative;
-      overflow: hidden;
-      background: var(--bg);
-    }
-
-    /* 우측 대각선 장식 블록 */
-    .hero-deco {
-      position: absolute;
-      top: 0; right: 0;
-      width: 42%;
-      height: 100%;
-      background: var(--navy-xpale);
-      clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
-      z-index: 0;
-    }
-
-    /* 그리드 패턴 (우측 블록 위) */
-    .hero-deco::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-              linear-gradient(var(--border) 1px, transparent 1px),
-              linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 40px 40px;
-      opacity: 0.5;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      width: 100%;
-    }
-
-    .hero-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--navy-mid);
-      letter-spacing: 0.25em;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .hero-tag::before {
-      content: '';
-      width: 32px; height: 2px;
-      background: var(--navy);
-    }
-
-    .hero-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 11vw, 148px);
-      line-height: 0.9;
-      letter-spacing: 0.02em;
-      color: var(--navy);
-      margin-bottom: 6px;
-    }
-
-    .hero-subtitle {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(28px, 4vw, 52px);
-      color: var(--text-dim);
-      letter-spacing: 0.12em;
-      margin-bottom: 36px;
-    }
-
-    .hero-desc {
-      max-width: 620px;
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.9;
-      margin-bottom: 44px;
-      border-left: 3px solid var(--navy);
-      padding-left: 20px;
-      word-break: keep-all;
-    }
-
-    .hero-links {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-decoration: none;
-      border-radius: 3px;
-      transition: all 0.2s;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--navy);
-      color: #fff;
-      font-weight: 700;
-    }
-    .btn-primary:hover {
-      background: var(--navy-mid);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(27,58,107,0.25);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--navy);
-      border: 2px solid var(--navy);
-      font-weight: 700;
-    }
-    .btn-secondary:hover {
-      background: var(--navy-pale);
-      transform: translateY(-2px);
-    }
-
-    /* ── DOWNLOAD BUTTONS ── */
-    .btn-download {
-      padding: 15px 30px;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      border-radius: 6px;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-download::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
-      transform: translateX(-100%);
-      transition: transform 0.5s ease;
-    }
-    .btn-download:hover::before {
-      transform: translateX(100%);
-    }
-    .btn-download.btn-primary {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
-      box-shadow: 0 4px 16px rgba(27,58,107,0.30);
-    }
-    .btn-download.btn-primary:hover {
-      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 28px rgba(27,58,107,0.40);
-    }
-    .btn-download.btn-secondary {
-      border-width: 2px;
-      box-shadow: 0 2px 10px rgba(27,58,107,0.12);
-    }
-    .btn-download.btn-secondary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 28px rgba(27,58,107,0.20);
-      background: var(--navy-pale);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1.5px solid var(--border);
-    }
-    .btn-ghost:hover {
-      border-color: var(--navy-light);
-      color: var(--navy);
-    }
-
-    /* ── SECTION COMMON ── */
-    .section-wrap {
-      padding: 96px 48px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--navy-mid);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .section-label::before {
-      content: '';
-      width: 20px; height: 2px;
-      background: var(--navy);
-    }
-
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(36px, 5.5vw, 64px);
-      line-height: 1;
-      margin-bottom: 56px;
-      color: var(--navy);
-      letter-spacing: 0.03em;
-    }
-
-    .full-divider {
-      width: 100%;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    @media (max-width: 1024px) {
-      .skills-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .skills-grid { grid-template-columns: 1fr; }
-    }
-
-    .skill-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 28px;
-      transition: all 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .skill-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: var(--navy);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    .skill-card:hover {
-      box-shadow: 0 4px 20px rgba(27,58,107,0.08);
-      transform: translateY(-2px);
-    }
-
-    .skill-card-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      color: var(--navy-mid);
-      letter-spacing: 0.25em;
-      margin-bottom: 8px;
-    }
-
-    .skill-card-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 14px;
-      color: var(--navy);
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      padding: 3px 9px;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      border-radius: 3px;
-      background: var(--bg);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .tag img {
-      width: 14px;
-      height: 14px;
-      object-fit: contain;
-      opacity: 0.9;
-    }
-    .tag.highlight img {
-      opacity: 1;
-    }
-
-    .tag.highlight {
-      border-color: rgba(27,58,107,0.35);
-      color: var(--navy);
-      background: var(--navy-pale);
-      font-weight: 500;
-    }
-
-    .section-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: -36px;
-      margin-bottom: 40px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .section-desc::before {
-      content: '※';
       font-size: 12px;
+      font-weight: 700;
       color: var(--navy-mid);
-    }
-
-    /* ── PROJECTS ── */
-    .project-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 20px;
-      overflow: hidden;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .project-card:hover {
-      border-color: var(--navy-light);
-      box-shadow: 0 8px 32px rgba(27,58,107,0.1);
-    }
-
-    .project-header {
-      padding: 40px 40px 32px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 24px;
-      align-items: start;
-    }
-
-    .project-number {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 72px;
-      line-height: 1;
-      margin-bottom: 4px;
-      color: var(--navy);
-    }
-
-    .project-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(24px, 3.5vw, 42px);
-      line-height: 1.1;
-      margin-bottom: 14px;
-      color: var(--navy);
-    }
-
-    .project-meta {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-
-    .project-meta-item {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .project-meta-item::before {
-      content: '';
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--navy-light);
-    }
-
-    .project-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.8;
-      max-width: 600px;
-    }
-
-    .project-detail {
-      margin-top: 20px;
-    }
-    .project-detail-row {
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: 16px;
-      padding: 12px 0;
-      border-top: 1px solid var(--border);
-      align-items: start;
-    }
-    .project-detail-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--navy-mid);
-      letter-spacing: 0.2em;
-      padding-top: 3px;
-    }
-    .project-detail-content {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.75;
-      word-break: keep-all;
-    }
-    .project-detail-content ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    .project-detail-content ul li::before {
-      content: '—';
-      margin-right: 8px;
-      color: var(--navy-light);
-    }
-    .project-stack-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .project-stack-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      background: var(--navy-xpale);
-      color: var(--navy-mid);
-      border: 1px solid var(--navy-pale);
-      padding: 3px 10px;
-      border-radius: 3px;
       letter-spacing: 0.05em;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .project-stack-tag img {
-      width: 13px;
-      height: 13px;
-      object-fit: contain;
-      opacity: 0.85;
-    }
-
-    .project-badge {
-      background: var(--navy);
-      color: #fff;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      padding: 6px 14px;
-      border-radius: 3px;
       white-space: nowrap;
-      letter-spacing: 0.1em;
+      padding-top: 2px;
+      width: 38px;
+      flex-shrink: 0;
     }
-
-    .project-challenges {
-      padding: 0 40px 36px;
-      border-top: 1px solid var(--border);
-      background: var(--surface);
-    }
-
-    .challenge-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--navy-mid);
-      letter-spacing: 0.25em;
-      padding: 20px 0 16px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 4px;
-    }
-
-    .challenge-item {
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 16px;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border);
-      align-items: start;
-    }
-    .challenge-item:last-child { border-bottom: none; }
-
-    .challenge-idx {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 18px;
-      color: var(--navy-light);
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    .challenge-headline {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 6px;
-      line-height: 1.5;
-    }
-
-    .challenge-body {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.8;
-    }
-
     .challenge-result {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 10px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--navy);
-      background: var(--navy-pale);
-      border: 1px solid rgba(27,58,107,0.2);
-      padding: 4px 10px;
-      border-radius: 3px;
-    }
-    .challenge-result::before {
-      content: '▶';
-      font-size: 8px;
-    }
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 10px;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 13px;
+          font-weight: 700;
+          color: var(--navy);
+          background: var(--navy-pale);
+          border: 1px solid rgba(27,58,107,0.2);
+          padding: 5px 12px;
+          border-radius: 3px;
+        }
+        .challenge-result::before {
+          content: '결과 ▶';
+          font-size: 13px;
+          font-weight: 700;
+          margin-right: 2px;
+        }
 
-    .challenge-arch {
-      margin-top: 16px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .challenge-arch img {
-      height: 80px;
-      width: auto;
-      max-width: 160px;
-      object-fit: cover;
-      border-radius: 5px;
-      border: 1px solid var(--border);
-      cursor: zoom-in;
-      transition: opacity 0.2s, border-color 0.2s;
-      display: block;
-    }
-    .challenge-arch img:hover {
-      opacity: 0.85;
-      border-color: var(--navy-light);
-    }
+        .challenge-arch {
+          margin-top: 16px;
+        }
+        .challenge-arch-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          color: var(--text-muted);
+          letter-spacing: 0.15em;
+          margin-bottom: 8px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-weight: 700;
+        }
+        .challenge-arch-label::before {
+          content: '';
+          width: 16px;
+          height: 1px;
+          background: var(--text-muted);
+        }
+        .challenge-arch-imgs {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .challenge-arch img {
+          height: 80px;
+          width: auto;
+          max-width: 160px;
+          object-fit: cover;
+          border-radius: 5px;
+          border: 1px solid var(--border);
+          cursor: zoom-in;
+          transition: opacity 0.2s, border-color 0.2s;
+          display: block;
+        }
+        .challenge-arch img:hover {
+          opacity: 0.85;
+          border-color: var(--navy-light);
+        }
 
-    /* ── LIGHTBOX ── */
-    .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: rgba(0,0,0,0.85);
-      align-items: center;
-      justify-content: center;
-      cursor: zoom-out;
-    }
-    .lightbox.active { display: flex; }
-    .lightbox img {
-      max-width: 90vw;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 6px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
-    }
-    .lightbox-close {
-      position: absolute;
-      top: 20px; right: 28px;
-      color: #fff;
-      font-size: 28px;
-      cursor: pointer;
-      line-height: 1;
-      opacity: 0.7;
-      transition: opacity 0.2s;
-    }
-    .lightbox-close:hover { opacity: 1; }
+        /* ── LIGHTBOX ── */
+        .lightbox {
+          display: none;
+          position: fixed;
+          inset: 0;
+          z-index: 9999;
+          background: rgba(0,0,0,0.85);
+          align-items: center;
+          justify-content: center;
+          cursor: zoom-out;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+          max-width: 90vw;
+          max-height: 90vh;
+          object-fit: contain;
+          border-radius: 6px;
+          box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+        }
+        .lightbox-close {
+          position: absolute;
+          top: 20px; right: 28px;
+          color: #fff;
+          font-size: 28px;
+          cursor: pointer;
+          line-height: 1;
+          opacity: 0.7;
+          transition: opacity 0.2s;
+        }
+        .lightbox-close:hover { opacity: 1; }
 
-    /* ── ABOUT ── */
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-bottom: 56px;
-    }
-    @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+        /* ── ABOUT ── */
+        .info-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+          margin-bottom: 56px;
+        }
+        @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
 
-    .info-cell {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 24px 28px;
-      transition: border-color 0.2s;
-    }
-    .info-cell:hover { border-color: var(--navy-light); }
+        .info-cell {
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 6px;
+          padding: 24px 28px;
+          transition: border-color 0.2s;
+        }
+        .info-cell:hover { border-color: var(--navy-light); }
 
-    .info-cell-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      color: var(--text-dim);
-      letter-spacing: 0.25em;
-      margin-bottom: 6px;
-    }
+        .info-cell-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 9px;
+          color: var(--text-dim);
+          letter-spacing: 0.25em;
+          margin-bottom: 6px;
+        }
 
-    .info-cell-value {
-      font-size: 14px;
-      color: var(--text);
-      font-weight: 500;
-    }
-    .info-cell-value a {
-      color: var(--navy-mid);
-      text-decoration: none;
-    }
-    .info-cell-value a:hover { text-decoration: underline; }
+        .info-cell-value {
+          font-size: 14px;
+          color: var(--text);
+          font-weight: 500;
+        }
+        .info-cell-value a {
+          color: var(--navy-mid);
+          text-decoration: none;
+        }
+        .info-cell-value a:hover { text-decoration: underline; }
 
-    /* ── ABOUT PROFILE ── */
-    .about-profile {
-      display: flex;
-      gap: 48px;
-      align-items: center;
-      margin-bottom: 56px;
-    }
+        /* ── ABOUT PROFILE ── */
+        .about-profile {
+          font-family: 'JetBrains Mono', monospace;
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 10px;
+          padding: 28px 32px;
+          margin-bottom: 56px;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
 
-    .profile-img {
-      width: 160px;
-      height: 213px;
-      object-fit: cover;
-      object-position: top;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      flex-shrink: 0;
-    }
+        .contact-title {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.2em;
+          color: var(--navy-mid);
+          text-transform: uppercase;
+          margin-bottom: 12px;
+        }
 
-    .profile-info {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      justify-content: center;
-    }
+        .contact-row {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          padding: 13px 0;
+          border-bottom: 1px solid var(--border);
+        }
+        .contact-row:last-child { border-bottom: none; }
 
-    .profile-name {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 4px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-    .profile-name span {
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-muted);
-      margin-left: 8px;
-      font-family: 'JetBrains Mono', monospace;
-      letter-spacing: 0.05em;
-    }
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 20px;
-    }
-    .profile-row:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
+        .contact-prompt {
+          font-size: 13px;
+          color: var(--navy-light);
+          font-weight: 700;
+          margin-right: 16px;
+          user-select: none;
+        }
 
-    .profile-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-dim);
-      letter-spacing: 0.2em;
-      width: 60px;
-      flex-shrink: 0;
-      font-weight: 700;
-    }
+        .contact-key {
+          font-size: 11px;
+          font-weight: 700;
+          color: var(--text-dim);
+          letter-spacing: 0.18em;
+          width: 70px;
+          flex-shrink: 0;
+        }
 
-    .profile-value {
-      font-size: 15px;
-      color: var(--navy);
-      font-weight: 700;
-    }
-    .profile-value a {
-      color: var(--navy);
-      text-decoration: none;
-    }
-    .profile-value a:hover { text-decoration: underline; }
+        .contact-dots {
+          flex: 1;
+          border-bottom: 1px dotted var(--border);
+          margin: 0 16px;
+          min-width: 40px;
+        }
 
-    @media (max-width: 600px) {
-      .about-profile { flex-direction: column; gap: 28px; }
-      .profile-img { width: 120px; height: 150px; }
-    }
+        .contact-val {
+          font-size: 13px;
+          color: var(--navy);
+          text-decoration: none;
+          font-weight: 400;
+          transition: color 0.2s;
+        }
+        .contact-val:hover {
+          color: var(--navy-mid);
+          text-decoration: underline;
+        }
 
-    /* ── TIMELINE ── */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
-    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; gap: 40px; } }
+        .profile-value {
+          font-size: 15px;
+          color: var(--navy);
+          font-weight: 700;
+        }
+        .profile-value a {
+          color: var(--navy);
+          text-decoration: none;
+        }
+        .profile-value a:hover { text-decoration: underline; }
 
-    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
-    @media (max-width: 1024px) { .three-col { grid-template-columns: 1fr 1fr; gap: 40px; } }
-    @media (max-width: 600px) { .three-col { grid-template-columns: 1fr; gap: 32px; } }
+        @media (max-width: 600px) {
+          .about-profile { flex-direction: column; gap: 28px; }
+          .profile-img { width: 120px; height: 150px; }
+        }
 
-    .col-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--navy-mid);
-      letter-spacing: 0.2em;
-      margin-bottom: 24px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid var(--navy);
-    }
+        /* ── TIMELINE ── */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+        @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; gap: 40px; } }
 
-    .timeline {
-      border-left: 2px solid var(--border);
-      padding-left: 28px;
-      margin-left: 8px;
-    }
+        .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+        @media (max-width: 1024px) { .three-col { grid-template-columns: 1fr 1fr; gap: 40px; } }
+        @media (max-width: 600px) { .three-col { grid-template-columns: 1fr; gap: 32px; } }
 
-    .timeline-item {
-      position: relative;
-      padding-bottom: 32px;
-    }
-    .timeline-item:last-child { padding-bottom: 0; }
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -35px; top: 5px;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: 2px solid var(--border);
-    }
-    .timeline-item.highlight::before {
-      border-color: var(--navy);
-      background: var(--navy);
-    }
+        .col-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          color: var(--navy-mid);
+          letter-spacing: 0.2em;
+          margin-bottom: 24px;
+          padding-bottom: 10px;
+          border-bottom: 2px solid var(--navy);
+        }
 
-    .timeline-date {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-dim);
-      margin-bottom: 3px;
-    }
+        .timeline {
+          border-left: 2px solid var(--border);
+          padding-left: 28px;
+          margin-left: 8px;
+        }
 
-    .timeline-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 3px;
-    }
+        .timeline-item {
+          position: relative;
+          padding-bottom: 32px;
+        }
+        .timeline-item:last-child { padding-bottom: 0; }
+        .timeline-item::before {
+          content: '';
+          position: absolute;
+          left: -35px; top: 5px;
+          width: 10px; height: 10px;
+          border-radius: 50%;
+          background: var(--bg);
+          border: 2px solid var(--border);
+        }
+        .timeline-item.highlight::before {
+          border-color: var(--navy);
+          background: var(--navy);
+        }
 
-    .timeline-detail {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
+        .timeline-date {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          color: var(--text-dim);
+          margin-bottom: 3px;
+        }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--navy);
-      padding: 36px 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
+        .timeline-name {
+          font-size: 14px;
+          font-weight: 700;
+          color: var(--navy);
+          margin-bottom: 3px;
+        }
 
-    .footer-text {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: rgba(255,255,255,0.5);
-    }
+        .timeline-detail {
+          font-size: 13px;
+          color: var(--text-muted);
+        }
 
-    .footer-links {
-      display: flex;
-      gap: 24px;
-    }
+        /* ── FOOTER ── */
+        footer {
+          background: var(--navy);
+          padding: 36px 48px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 16px;
+        }
 
-    .footer-links a {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: #fff; }
+        .footer-text {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          color: rgba(255,255,255,0.5);
+        }
 
-    /* ── BLOG ── */
-    .blog-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 48px;
-    }
+        .footer-links {
+          display: flex;
+          gap: 24px;
+        }
 
-    .blog-stat-card {
-      background: var(--navy);
-      border-radius: 6px;
-      padding: 32px 28px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .blog-stat-card::before {
-      content: '';
-      position: absolute;
-      top: -30px; right: -30px;
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
-    }
+        .footer-links a {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          color: rgba(255,255,255,0.6);
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #fff; }
 
-    .blog-stat-number {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(48px, 6vw, 72px);
-      color: #fff;
-      line-height: 1;
-      margin-bottom: 6px;
-      letter-spacing: 0.03em;
-    }
+        /* ── BLOG ── */
+        .blog-stats {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+          margin-bottom: 48px;
+        }
 
-    .blog-stat-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 0.2em;
-    }
+        .blog-stat-card {
+          background: var(--navy);
+          border-radius: 6px;
+          padding: 32px 28px;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+        .blog-stat-card::before {
+          content: '';
+          position: absolute;
+          top: -30px; right: -30px;
+          width: 100px; height: 100px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.04);
+        }
 
-    .blog-categories {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 12px;
-      margin-bottom: 36px;
-    }
+        .blog-stat-number {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(48px, 6vw, 72px);
+          color: #fff;
+          line-height: 1;
+          margin-bottom: 6px;
+          letter-spacing: 0.03em;
+        }
 
-    .blog-cat-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.2s;
-      text-decoration: none;
-    }
-    .blog-cat-item:hover {
-      border-color: var(--navy-light);
-      background: var(--navy-pale);
-      transform: translateY(-1px);
-    }
+        .blog-stat-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          color: rgba(255,255,255,0.5);
+          letter-spacing: 0.2em;
+        }
 
-    .blog-cat-name {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--navy);
-      font-weight: 700;
-      letter-spacing: 0.05em;
-    }
+        .blog-categories {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 12px;
+          margin-bottom: 36px;
+        }
 
-    .blog-cat-count {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      color: var(--navy-light);
-      line-height: 1;
-    }
+        .blog-cat-item {
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 6px;
+          padding: 16px 20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          transition: all 0.2s;
+          text-decoration: none;
+        }
+        .blog-cat-item:hover {
+          border-color: var(--navy-light);
+          background: var(--navy-pale);
+          transform: translateY(-1px);
+        }
 
-    .blog-story {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 2;
-      margin-bottom: 48px;
-      border-left: 3px solid var(--navy);
-      padding-left: 20px;
-    }
-    .blog-story p {
-      margin-bottom: 8px;
-    }
-    .blog-story p:last-child {
-      margin-bottom: 0;
-    }
+        .blog-cat-name {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          color: var(--navy);
+          font-weight: 700;
+          letter-spacing: 0.05em;
+        }
 
-    .blog-posts {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 16px;
-      margin-bottom: 36px;
-    }
+        .blog-cat-count {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 20px;
+          color: var(--navy-light);
+          line-height: 1;
+        }
 
-    .blog-post-card {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      text-decoration: none;
-      background: var(--bg);
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-      display: block;
-    }
-    .blog-post-card:hover {
-      border-color: var(--navy-light);
-      box-shadow: 0 8px 24px rgba(27,58,107,0.1);
-      transform: translateY(-3px);
-    }
+        .blog-story {
+          font-size: 14px;
+          color: var(--text-muted);
+          line-height: 2;
+          margin-bottom: 48px;
+          border-left: 3px solid var(--navy);
+          padding-left: 20px;
+        }
+        .blog-story p {
+          margin-bottom: 8px;
+        }
+        .blog-story p:last-child {
+          margin-bottom: 0;
+        }
 
-    .blog-post-thumb {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      background: var(--surface2);
-    }
-    .blog-post-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s;
-    }
-    .blog-post-card:hover .blog-post-thumb img {
-      transform: scale(1.04);
-    }
+        .blog-posts {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 16px;
+          margin-bottom: 36px;
+        }
 
-    .blog-post-info {
-      padding: 16px 18px 20px;
-    }
+        .blog-post-card {
+          border: 1px solid var(--border);
+          border-radius: 8px;
+          overflow: hidden;
+          text-decoration: none;
+          background: var(--bg);
+          transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+          display: block;
+        }
+        .blog-post-card:hover {
+          border-color: var(--navy-light);
+          box-shadow: 0 8px 24px rgba(27,58,107,0.1);
+          transform: translateY(-3px);
+        }
 
-    .blog-post-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      color: var(--navy-mid);
-      letter-spacing: 0.15em;
-      margin-bottom: 6px;
-    }
+        .blog-post-thumb {
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          overflow: hidden;
+          background: var(--surface2);
+        }
+        .blog-post-thumb img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s;
+        }
+        .blog-post-card:hover .blog-post-thumb img {
+          transform: scale(1.04);
+        }
 
-    .blog-post-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--navy);
-      line-height: 1.5;
-    }
+        .blog-post-info {
+          padding: 16px 18px 20px;
+        }
 
-    .blog-cta {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+        .blog-post-tag {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 9px;
+          color: var(--navy-mid);
+          letter-spacing: 0.15em;
+          margin-bottom: 6px;
+        }
 
-    .blog-cta-desc {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-dim);
-      letter-spacing: 0.05em;
-    }
+        .blog-post-title {
+          font-size: 13px;
+          font-weight: 700;
+          color: var(--navy);
+          line-height: 1.5;
+        }
 
-    @media (max-width: 768px) {
-      .blog-stats { grid-template-columns: 1fr; }
-    }
+        .blog-cta {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
 
-    /* ── IMAGE SLIDER ── */
-    .slider-wrap {
-      overflow: hidden;
-      position: relative;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 20px 0;
-    }
-    .slider-wrap::before,
-    .slider-wrap::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 80px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .slider-wrap::before {
-      left: 0;
-      background: linear-gradient(to right, var(--surface), transparent);
-    }
-    .slider-wrap::after {
-      right: 0;
-      background: linear-gradient(to left, var(--surface), transparent);
-    }
-    .slider-track {
-      display: flex;
-      gap: 16px;
-      width: max-content;
-      animation: slideLeft 28s linear infinite;
-    }
-    .slider-wrap:hover .slider-track {
-      animation-play-state: paused;
-    }
-    @keyframes slideLeft {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .slider-img {
-      height: 200px;
-      width: auto;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      object-fit: cover;
-      flex-shrink: 0;
-      cursor: zoom-in;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .slider-img:hover {
-      transform: scale(1.03);
-      box-shadow: 0 8px 24px rgba(27,58,107,0.15);
-    }
 
-    /* ── SCROLL DOWN ── */
-    .scroll-down {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      text-decoration: none;
-      animation: bounceDown 2s ease-in-out infinite;
-      z-index: 10;
-    }
-    @keyframes bounceDown {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50%       { transform: translateX(-50%) translateY(8px); }
-    }
+        .blog-cta-desc {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          color: var(--text-dim);
+          letter-spacing: 0.05em;
+        }
 
-    /* ── TOP BUTTON ── */
-    .top-btn {
-      position: fixed;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      width: auto;
-      height: auto;
-      padding: 10px 28px;
-      background: var(--navy);
-      color: #fff;
-      border: none;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s, transform 0.3s;
-      z-index: 200;
-      text-decoration: none;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      box-shadow: 0 8px 24px rgba(27,58,107,0.35);
-    }
-    .top-btn.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(-50%) translateY(0);
-    }
-    .top-btn:hover {
-      background: var(--navy-mid);
-      box-shadow: 0 12px 32px rgba(27,58,107,0.45);
-    }
+        @media (max-width: 768px) {
+          .blog-stats { grid-template-columns: 1fr; }
+        }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .fade-up { opacity: 0; animation: fadeUp 0.7s ease forwards; }
-    .d1 { animation-delay: 0.1s; }
-    .d2 { animation-delay: 0.2s; }
-    .d3 { animation-delay: 0.3s; }
-    .d4 { animation-delay: 0.4s; }
-    .d5 { animation-delay: 0.55s; }
+        /* ── IMAGE SLIDER ── */
+        .slider-wrap {
+          overflow: hidden;
+          position: relative;
+          background: var(--surface);
+          border-top: 1px solid var(--border);
+          padding: 20px 0;
+        }
+        .slider-wrap::before,
+        .slider-wrap::after {
+          content: '';
+          position: absolute;
+          top: 0; bottom: 0;
+          width: 80px;
+          z-index: 2;
+          pointer-events: none;
+        }
+        .slider-wrap::before {
+          left: 0;
+          background: linear-gradient(to right, var(--surface), transparent);
+        }
+        .slider-wrap::after {
+          right: 0;
+          background: linear-gradient(to left, var(--surface), transparent);
+        }
+        .slider-track {
+          display: flex;
+          gap: 16px;
+          width: max-content;
+          animation: slideLeft 28s linear infinite;
+        }
+        .slider-wrap:hover .slider-track {
+          animation-play-state: paused;
+        }
+        @keyframes slideLeft {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .slider-img {
+          height: 200px;
+          width: auto;
+          border-radius: 6px;
+          border: 1px solid var(--border);
+          object-fit: cover;
+          flex-shrink: 0;
+          cursor: zoom-in;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .slider-img:hover {
+          transform: scale(1.03);
+          box-shadow: 0 8px 24px rgba(27,58,107,0.15);
+        }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 0 20px; }
-      .hero { padding: 90px 24px 60px; }
-      .hero-deco { display: none; }
-      .section-wrap { padding: 64px 24px; }
-      .project-header { grid-template-columns: 1fr; padding: 28px 24px 20px; }
-      .project-challenges { padding: 0 24px 28px; }
-      footer { padding: 28px 24px; }
-    }
-  </style>
-</head>
-<body>
+        /* ── SCROLL DOWN ── */
+        .scroll-down {
+          position: absolute;
+          bottom: 36px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0;
+          text-decoration: none;
+          animation: bounceDown 2s ease-in-out infinite;
+          z-index: 10;
+        }
+        @keyframes bounceDown {
+          0%, 100% { transform: translateX(-50%) translateY(0); }
+          50%       { transform: translateX(-50%) translateY(8px); }
+        }
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">lim.yosup<span class="nav-dot"></span></div>
-  <div class="nav-links">
-    <a href="#skills">SKILLS</a>
-    <a href="#blog">BLOG</a>
-    <a href="#projects">PROJECTS</a>
-    <a href="#about">ABOUT</a>
-  </div>
-</nav>
+/* ── TOP BUTTON ── */
+        .top-btn {
+          position: fixed;
+          bottom: 36px;
+          left: 50%;
+          transform: translateX(-50%) translateY(20px);
+          width: auto;
+          height: auto;
+          padding: 10px 28px;
+          background: var(--navy);
+          color: #fff;
+          border: none;
+          border-radius: 999px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s, transform 0.3s;
+          z-index: 200;
+          text-decoration: none;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          box-shadow: 0 8px 24px rgba(27,58,107,0.35);
+        }
+        .top-btn.visible {
+          opacity: 1;
+          pointer-events: auto;
+          transform: translateX(-50%) translateY(0);
+        }
+        .top-btn:hover {
+          background: var(--navy-mid);
+          box-shadow: 0 12px 32px rgba(27,58,107,0.45);
+        }
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-deco"></div>
-  <div class="hero-content">
-    <div class="hero-tag fade-up d1">BACKEND DEVELOPER</div>
-    <h1 class="hero-name fade-up d2">임요섭</h1>
-    <div class="hero-subtitle fade-up d3">Lim Yosup</div>
-    <p class="hero-desc fade-up d4">
-      안녕하세요, 백엔드 개발자 임요섭입니다.<br />
-      <br />
-      Elasticsearch 도입으로 검색 병목 p95 31% 해결,<br />
-      Outbox 패턴으로 MSA 이벤트 유실 0건 달성,<br />
-      Resilience4j로 장애 상황 실패율 0% 유지.<br />
-      <br />
-      4년간 270편의 기록으로 팀의 WIKI가 되는 Java / Spring Boot 백엔드 개발자입니다.
-    </p>
-    <div class="hero-links fade-up d5">
-      <a href="resume.pdf" class="btn btn-primary btn-download" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        이력서 다운로드
-      </a>
-      <a href="portfolio.pdf" class="btn btn-secondary btn-download" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        포트폴리오 다운로드
-      </a>
-      <a href="https://github.com/xub2" target="_blank" class="btn btn-ghost">GitHub ↗</a>
-      <a href="https://bdisappointed.tistory.com" target="_blank" class="btn btn-ghost">Blog ↗</a>
-    </div>
-  </div>
-</div>
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes floatY {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-8px); }
+        }
+        @keyframes floatYSlow {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-5px); }
+        }
+        .fade-up { opacity: 0; animation: fadeUp 0.7s ease forwards; }
+        .d1 { animation-delay: 0.1s; }
+        .d2 { animation-delay: 0.2s; }
+        .d3 { animation-delay: 0.3s; }
+        .d4 { animation-delay: 0.4s; }
+        .d5 { animation-delay: 0.55s; }
 
-<a href="#skills" class="scroll-down">
-  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <polyline points="8,12 22,28 36,12" stroke="var(--navy)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:-18px;opacity:0.35;">
-    <polyline points="8,12 22,28 36,12" stroke="var(--navy)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</a>
+        /* 버튼 float */
+        .hero-btn-group { animation: floatY 3.5s ease-in-out infinite; }
 
-<div class="full-divider"></div>
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+          nav { padding: 0 20px; }
+          .hero { padding: 90px 24px 60px; }
+          .hero-content { grid-template-columns: 1fr; }
+          .hero-right-col { order: -1; min-height: 260px; }
+          .hero-photo { width: 160px; height: 200px; margin: 20px auto; }
+          .section-wrap { padding: 64px 24px; }
+          .project-header { grid-template-columns: 1fr; padding: 28px 24px 20px; }
+          .project-challenges { padding: 0 24px 28px; }
+          footer { padding: 28px 24px; }
+        }
+      </style>
+    </head>
+    <body>
 
-<!-- SKILLS -->
-<div class="section-wrap" id="skills">
-  <div class="section-label">TECHNICAL SKILLS</div>
-  <h2 class="section-title">기술 스택</h2>
-  <div class="skills-grid">
-    <div class="skill-card">
-      <div class="skill-card-label">01 · BACKEND</div>
-      <div class="skill-card-title">Backend</div>
-      <div class="skill-tags">
-        <span class="tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/spring/6DB33F" alt="">Spring Framework</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/spring/6DB33F" alt="">Spring Data JPA</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/hibernate/59666C" alt="">Hibernate ORM</span>
-        <span class="tag">MyBatis</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/springsecurity/6DB33F" alt="">Spring Security</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/thymeleaf/005F0F" alt="">Thymeleaf</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/html5/E34F26" alt="">HTML</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/css/1572B6" alt="">CSS</span>
+    <!-- NAV -->
+    <nav>
+      <div class="nav-logo">lim.yosup<span class="nav-dot"></span></div>
+      <div class="nav-links">
+        <a href="#skills">SKILLS</a>
+        <a href="#blog">BLOG</a>
+        <a href="#projects">PROJECTS</a>
+        <a href="#about">ABOUT</a>
       </div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-label">02 · DATABASE & SEARCH</div>
-      <div class="skill-card-title">Database & Search</div>
-      <div class="skill-tags">
-        <span class="tag"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="">PostgreSQL</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/elasticsearch/005571" alt="">Elasticsearch</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="">MySQL</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/redis/FF4438" alt="">Redis</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-label">03 · MESSAGING & INFRA</div>
-      <div class="skill-card-title">Messaging & Infra</div>
-      <div class="skill-tags">
-        <span class="tag"><img src="https://cdn.simpleicons.org/apachekafka/231F20" alt="">Kafka</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="">Docker</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/git/F05032" alt="">Git</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-label">04 · TOOLS & COLLABORATION</div>
-      <div class="skill-card-title">Tools & Collaboration</div>
-      <div class="skill-tags">
-        <span class="tag"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/slack.svg" style="filter: invert(18%) sepia(90%) saturate(2000%) hue-rotate(320deg) brightness(90%);" alt="">Slack</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/notion/000000" alt="">Notion</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/anthropic/D97757" alt="">Claude</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/googlegemini/8E75B2" alt="">Gemini</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/postman/FF6C37" alt="">Postman</span>
-        <span class="tag"><img src="https://cdn.simpleicons.org/discord/5865F2" alt="">Discord</span>
-      </div>
-    </div>
-  </div>
-</div>
+    </nav>
+    <button class="theme-toggle" id="themeToggle">
+      <svg id="iconMoon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+      <svg id="iconSun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
 
-<div class="full-divider"></div>
-
-<!-- BLOG -->
-<div class="section-wrap" id="blog">
-  <div class="section-label">BLOG</div>
-  <h2 class="section-title">팀의 WIKI가 되는 백엔드 개발자</h2>
-
-  <div class="blog-stats">
-    <div class="blog-stat-card">
-      <div class="blog-stat-number">272</div>
-      <div class="blog-stat-label">TOTAL POSTS</div>
-    </div>
-    <div class="blog-stat-card">
-      <div class="blog-stat-number">4+</div>
-      <div class="blog-stat-label">YEARS WRITING</div>
-    </div>
-    <div class="blog-stat-card">
-      <div class="blog-stat-number">4,666</div>
-      <div class="blog-stat-label">TOTAL VISITORS</div>
-    </div>
-  </div>
-
-  <div class="blog-story">
-    <p>학부 시절, 시험 대비용으로 글쓰기를 시작했습니다.</p>
-    <p>그러다 개발을 하면서 같은 에러에 반복적으로 시간을 잃는 경험을 했고, 직접 기록해둔 글 덕분에 빠르게 해결할 수 있다는 걸 깨달았습니다.</p>
-    <p>시간이 지나면서 내 글이 팀원들에게도 도움이 됐고, 문서화가 반복 질문을 줄이고 팀 전체의 능률을 올린다는 걸 직접 느꼈습니다.</p>
-    <p>저의 꾸준함과 잠깐의 시간이 주변에 높은 능률과 좋은 영향을 주길 기대하며 지금까지도 글을 작성하고 있습니다.</p>
-  </div>
-
-  <div class="blog-posts">
-    <a href="https://bdisappointed.tistory.com/288" target="_blank" class="blog-post-card">
-      <div class="blog-post-thumb">
-        <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/blog/288.png" alt="웹 서버, WAS, 그리고 Ingress까지">
-      </div>
-      <div class="blog-post-info">
-        <div class="blog-post-tag">Backend · Infra</div>
-        <div class="blog-post-title">웹 서버, WAS, 그리고 Ingress까지</div>
-      </div>
-    </a>
-    <a href="https://bdisappointed.tistory.com/287" target="_blank" class="blog-post-card">
-      <div class="blog-post-thumb">
-        <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/blog/287.png" alt="멱등성(Idempotency)에 대하여">
-      </div>
-      <div class="blog-post-info">
-        <div class="blog-post-tag">Backend · 결제</div>
-        <div class="blog-post-title">멱등성(Idempotency)에 대하여</div>
-      </div>
-    </a>
-    <a href="https://bdisappointed.tistory.com/286" target="_blank" class="blog-post-card">
-      <div class="blog-post-thumb">
-        <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/blog/286.png" alt="ES의 Dynamic Mapping 때문에 생긴 일">
-      </div>
-      <div class="blog-post-info">
-        <div class="blog-post-tag">Elasticsearch</div>
-        <div class="blog-post-title">ES의 Dynamic Mapping 때문에 생긴 일</div>
-      </div>
-    </a>
-    <a href="https://bdisappointed.tistory.com/284" target="_blank" class="blog-post-card">
-      <div class="blog-post-thumb">
-        <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/blog/284.png" alt="SPOF 문제와 고가용성">
-      </div>
-      <div class="blog-post-info">
-        <div class="blog-post-tag">MSA · Architecture</div>
-        <div class="blog-post-title">파이널 프로젝트에서 마주친 SPOF 문제와 고가용성</div>
-      </div>
-    </a>
-  </div>
-
-  <div class="blog-cta">
-    <a href="https://bdisappointed.tistory.com" target="_blank" class="btn btn-primary">Blog 방문 ↗</a>
-    <span class="blog-cta-desc">버튼 클릭시 즉시 이동합니다.</span>
-  </div>
-</div>
-
-<div class="full-divider"></div>
-
-<!-- PROJECTS -->
-<div class="section-wrap" id="projects">
-  <div class="section-label">WORK</div>
-  <h2 class="section-title">프로젝트</h2>
-  <p class="section-desc">자세한 내용과 아키텍처는 포트폴리오를 참고 부탁드립니다.</p>
-
-  <!-- Project 1 -->
-  <div class="project-card">
-    <div class="project-header">
-      <div>
-        <div class="project-number">01</div>
-        <div class="project-title">원데이 클래스 예약 플랫폼<br />잡아 클래스 (Jaba Class)</div>
-        <div class="project-meta">
-          <div class="project-meta-item">2026.03 — 2026.05</div>
-          <div class="project-meta-item">6인 팀 프로젝트</div>
-          <div class="project-meta-item">팀장 / Product Owner</div>
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-blob hero-blob-1"></div>
+      <div class="hero-blob hero-blob-2"></div>
+      <div class="hero-blob hero-blob-3"></div>
+      <div class="hero-content">
+        <!-- 왼쪽 컬럼 -->
+        <div class="hero-left">
+          <div class="hero-tag fade-up d1">BACKEND DEVELOPER</div>
+          <h1 class="hero-name fade-up d2">임요섭</h1>
+          <div class="hero-subtitle fade-up d3">Lim Yosup / xuv2</div>
+          <div class="hero-divider fade-up d3"></div>
+          <p class="hero-desc fade-up d4">
+            안녕하세요, 신입 백엔드 개발자 임요섭입니다.<br /><br />
+            MSA 기반 예약·결제 플랫폼에서 팀장을 맡아 검색 성능과 장애 대응을 직접 이끌었습니다.<br />
+            Elasticsearch 도입으로 검색 병목 p95 31%를 해결했으며, Outbox 패턴으로 MSA 이벤트 유실 0건을 달성했고, Resilience4j로 장애 상황 실패율 0%를 유지했습니다.<br /><br />
+            학부 시절부터 4년간 270편의 기술 블로그를 써오며 배운 것을 반드시 기록으로 남겼습니다.<br />
+            또한, 팀 프로젝트에서도 README·API 명세·트러블슈팅 등 팀 MD 작성을 주도했습니다.<br /><br />
+            <span style="white-space: nowrap;">그 기록이 팀의 지식이 되는, <strong>팀의 WIKI가 되는 Java / Spring Boot 백엔드 개발자</strong>입니다.</span>
+          </p>
+          <div class="hero-divider fade-up d5"></div>
+          <div class="hero-links fade-up d5">
+            <div class="hero-btn-group">
+              <span class="hero-btn-label">RESUME</span>
+              <a href="resume.pdf" class="btn btn-primary btn-download" target="_blank">이력서 열람 ↗</a>
+            </div>
+            <div class="hero-btn-group">
+              <span class="hero-btn-label">PORTFOLIO</span>
+              <a href="portfolio.pdf" class="btn btn-secondary btn-download" target="_blank">포트폴리오 열람 ↗</a>
+            </div>
+          </div>
         </div>
-        <div class="project-detail">
-          <div class="project-detail-row">
-            <div class="project-detail-label">SERVICE</div>
-            <div class="project-detail-content">
-              사용자 행동 이력 기반 AI 추천과 MSA 아키텍처를 적용한 원데이 클래스 예약·결제 플랫폼.
-              유저 / 상품 / 주문 / 결제 / 정산 / 관리자 / AI 총 7개 마이크로서비스로 구성.
+        <!-- 오른쪽 컬럼 -->
+        <div class="hero-right-col fade-up d3">
+          <div class="hero-photo">
+            <img src="assets/images/xuv.jpg" alt="임요섭 프로필 사진" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#skills" class="scroll-down">
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="8,12 22,28 36,12" stroke="var(--navy)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:-18px;opacity:0.35;">
+        <polyline points="8,12 22,28 36,12" stroke="var(--navy)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+
+    <div class="full-divider"></div>
+
+    <!-- SKILLS -->
+    <div class="section-wrap" id="skills">
+      <div class="section-label">TECHNICAL SKILLS</div>
+      <h2 class="section-title">기술 스택</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-card-label">01 · BACKEND</div>
+          <div class="skill-card-title">Backend</div>
+          <div class="skill-tags">
+            <span class="tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/spring/6DB33F" alt="">Spring Framework</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/spring/6DB33F" alt="">Spring Data JPA</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/hibernate/59666C" alt="">Hibernate ORM</span>
+            <span class="tag">MyBatis</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/springsecurity/6DB33F" alt="">Spring Security</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/thymeleaf/005F0F" alt="">Thymeleaf</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/html5/E34F26" alt="">HTML</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/css/1572B6" alt="">CSS</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-label">02 · DATABASE & SEARCH</div>
+          <div class="skill-card-title">Database & Search</div>
+          <div class="skill-tags">
+            <span class="tag"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="">PostgreSQL</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/elasticsearch/005571" alt="">Elasticsearch</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="">MySQL</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/redis/FF4438" alt="">Redis</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-label">03 · MESSAGING & INFRA</div>
+          <div class="skill-card-title">Messaging & Infra</div>
+          <div class="skill-tags">
+            <span class="tag"><img src="https://cdn.simpleicons.org/apachekafka/231F20" alt="">Kafka</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="">Docker</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/git/F05032" alt="">Git</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-label">04 · TOOLS & COLLABORATION</div>
+          <div class="skill-card-title">Tools & Collaboration</div>
+          <div class="skill-tags">
+            <span class="tag"><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/slack.svg" style="filter: invert(18%) sepia(90%) saturate(2000%) hue-rotate(320deg) brightness(90%);" alt="">Slack</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/notion/000000" alt="">Notion</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/anthropic/D97757" alt="">Claude</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/googlegemini/8E75B2" alt="">Gemini</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/postman/FF6C37" alt="">Postman</span>
+            <span class="tag"><img src="https://cdn.simpleicons.org/discord/5865F2" alt="">Discord</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="full-divider"></div>
+
+    <!-- BLOG -->
+    <div class="section-wrap" id="blog">
+      <div class="section-label">BLOG</div>
+      <h2 class="section-title">팀의 WIKI가 되는 백엔드 개발자</h2>
+
+      <div class="blog-stats">
+        <div class="blog-stat-card">
+          <div class="blog-stat-number">272+</div>
+          <div class="blog-stat-label">TOTAL POSTS</div>
+        </div>
+        <div class="blog-stat-card">
+          <div class="blog-stat-number">4+</div>
+          <div class="blog-stat-label">YEARS WRITING</div>
+        </div>
+        <div class="blog-stat-card">
+          <div class="blog-stat-number">4,666+</div>
+          <div class="blog-stat-label">TOTAL VISITORS</div>
+        </div>
+      </div>
+
+      <div class="blog-story">
+        <p>학부 시절, 시험 대비용으로 글쓰기를 시작했습니다.</p>
+        <p>그러다 개발을 하면서 같은 에러에 반복적으로 시간을 잃는 경험을 했고, 직접 기록해둔 글 덕분에 빠르게 해결할 수 있다는 걸 깨달았습니다.</p>
+        <p>시간이 지나면서 내 글이 팀원들에게도 도움이 됐고, 문서화가 반복 질문을 줄이고 팀 전체의 능률을 올린다는 걸 직접 느꼈습니다.</p>
+        <p>그렇게 4년간 꾸준히 써온 글이 어느덧 <strong>270편</strong>이 됐습니다. 트러블슈팅 기록, 개념 정리, 구현 회고까지, 현재까지도 개발의 흔적을 남기고 있습니다.</p>
+        <p>저의 꾸준함과 잠깐의 시간이 주변에 높은 능률과 좋은 영향을 주길 기대하며 지금까지도 글을 작성하고 있습니다.</p>
+      </div>
+
+      <div class="section-label" style="margin-top: 48px; font-size: 16px; font-weight: 700;">글 미리보기</div>
+
+      <div class="blog-posts">
+        <a href="https://bdisappointed.tistory.com/288" target="_blank" class="blog-post-card">
+          <div class="blog-post-thumb">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/blog/288.png" alt="웹 서버, WAS, 그리고 Ingress까지">
+          </div>
+          <div class="blog-post-info">
+            <div class="blog-post-tag">Backend · Infra</div>
+            <div class="blog-post-title">웹 서버, WAS, 그리고 Ingress까지</div>
+          </div>
+        </a>
+        <a href="https://bdisappointed.tistory.com/287" target="_blank" class="blog-post-card">
+          <div class="blog-post-thumb">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/blog/287.png" alt="멱등성(Idempotency)에 대하여">
+          </div>
+          <div class="blog-post-info">
+            <div class="blog-post-tag">Backend · 결제</div>
+            <div class="blog-post-title">멱등성(Idempotency)에 대하여</div>
+          </div>
+        </a>
+        <a href="https://bdisappointed.tistory.com/286" target="_blank" class="blog-post-card">
+          <div class="blog-post-thumb">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/blog/286.png" alt="ES의 Dynamic Mapping 때문에 생긴 일">
+          </div>
+          <div class="blog-post-info">
+            <div class="blog-post-tag">Elasticsearch</div>
+            <div class="blog-post-title">ES의 Dynamic Mapping 때문에 생긴 일</div>
+          </div>
+        </a>
+        <a href="https://bdisappointed.tistory.com/284" target="_blank" class="blog-post-card">
+          <div class="blog-post-thumb">
+            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/blog/284.png" alt="SPOF 문제와 고가용성">
+          </div>
+          <div class="blog-post-info">
+            <div class="blog-post-tag">MSA · Architecture</div>
+            <div class="blog-post-title">파이널 프로젝트에서 마주친 SPOF 문제와 고가용성</div>
+          </div>
+        </a>
+      </div>
+
+      <div style="height: 32px;"></div>
+
+      <div class="blog-cta">
+        <div class="hero-btn-group">
+          <span class="hero-btn-label">BLOG LINK</span>
+          <a href="https://bdisappointed.tistory.com" target="_blank" class="btn btn-secondary btn-download">블로그 바로가기 ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="full-divider"></div>
+
+    <!-- PROJECTS -->
+    <div class="section-wrap" id="projects">
+      <div class="section-label">PROJECTS</div>
+      <h2 class="section-title">프로젝트</h2>
+      <p class="section-desc">자세한 내용과 아키텍처는 포트폴리오를 참고 부탁드립니다.</p>
+
+      <!-- Project 1 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <div class="project-number">01</div>
+            <div class="project-title">원데이 클래스 예약 플랫폼<br />잡아 클래스 (Jaba Class)</div>
+            <div class="project-meta">
+              <div class="project-meta-item">2026.03 — 2026.05</div>
+              <div class="project-meta-item">6인 팀 프로젝트</div>
+              <div class="project-meta-item">팀장 / Product Owner</div>
+            </div>
+            <div class="project-detail">
+              <div class="project-detail-row">
+                <div class="project-detail-label">SERVICE</div>
+                <div class="project-detail-content">
+                  <p>사용자 행동 이력 기반 AI 추천과 MSA 아키텍처를 적용한 원데이 클래스 예약·결제 플랫폼.</p>
+                  <p>유저 / 상품 / 주문 / 결제 / 정산 / 관리자 / AI 총 7개 마이크로서비스로 구성.</p>
+                </div>
+              </div>
+              <div class="project-detail-row">
+                <div class="project-detail-label">ROLE</div>
+                <div class="project-detail-content">
+                  <ul>
+                    <li>팀장 · Product Owner — 스프린트 운영, 요구사항 관리, 코드 리뷰 주도</li>
+                    <li>Admin 서비스 전담 개발 (강사 정산, 신고 처리, 통계 대시보드)</li>
+                    <li>Elasticsearch 기반 검색 서비스 설계 · 개발 (p95 31% 개선)</li>
+                    <li>Outbox 패턴 기반 MSA 이벤트 유실 0% 설계 · 구현</li>
+                    <li>Resilience4j 서킷 브레이커로 장애 중 실패율 0% 유지</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="project-detail-row">
+                <div class="project-detail-label">STACK</div>
+                <div class="project-detail-content">
+                  <div class="project-stack-tags">
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java 17</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot 3</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/elasticsearch/005571" alt="">Elasticsearch</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/apachekafka/231F20" alt="">Kafka</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="">PostgreSQL</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/redis/FF4438" alt="">Redis</span>
+                    <span class="project-stack-tag">Resilience4j</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="project-detail-row">
-            <div class="project-detail-label">ROLE</div>
-            <div class="project-detail-content">
-              <ul>
-                <li>팀장 · Product Owner — 스프린트 운영, 요구사항 관리, 코드 리뷰 주도</li>
-                <li>Admin 서비스 전담 개발 (강사 정산, 신고 처리, 통계 대시보드)</li>
-                <li>Elasticsearch 기반 검색 서비스 설계 · 개발 (p95 31% 개선)</li>
-                <li>Outbox 패턴 기반 MSA 이벤트 유실 0% 설계 · 구현</li>
-                <li>Resilience4j 서킷 브레이커로 장애 중 실패율 0% 유지</li>
-              </ul>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
+            <span class="project-badge">🏆 최우수 프로젝트 1위</span>
+            <a href="https://github.com/prgrms-be-advdevcourse/beadv5_5_ChamomileChicken_BE"
+               target="_blank" class="btn btn-ghost" style="font-size:11px;padding:8px 16px;">GitHub ↗</a>
+          </div>
+        </div>
+        <div class="slider-wrap">
+          <div class="slider-track">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img1.png" alt="Jaba Class 스크린샷 1">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img2.png" alt="Jaba Class 스크린샷 2">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img3.png" alt="Jaba Class 스크린샷 3">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img4.png" alt="Jaba Class 스크린샷 4">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img5.png" alt="Jaba Class 스크린샷 5">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img6.png" alt="Jaba Class 스크린샷 6">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img7.png" alt="Jaba Class 스크린샷 7">
+            <!-- 무한 루프용 복제 -->
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img1.png" alt="">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img2.png" alt="">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img3.png" alt="">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img4.png" alt="">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img5.png" alt="">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img6.png" alt="">
+            <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img7.png" alt="">
+          </div>
+        </div>
+        <div class="project-challenges">
+          <div class="challenge-title">TECHNICAL CHALLENGES</div>
+
+          <div class="challenge-item">
+            <div class="challenge-idx">01</div>
+            <div>
+              <div class="challenge-headline">검색 트래픽 집중 — Elasticsearch 도입으로 p95 31% 개선</div>
+              <div class="challenge-body">
+                <div class="cb-row"><span class="cb-label">문제</span>JPA LIKE는 앞 와일드카드로 인해 Full Table Scan — 트래픽 집중 시 성능 저하</div>
+                <div class="cb-row"><span class="cb-label">해결</span>GIN 인덱스로 12% 개선했으나 실패 14건 발생, 수치로 한계 검증 후 ES 도입. nori + fuzziness:AUTO로 한국어 검색 품질 동시 확보</div>
+              </div>
+              <div class="challenge-result">p95 1,879ms → 1,294ms · 실패율 0% · 데이터 100배 증가 시 응답 지연 증가율 ES +85% vs DB +153% (ES 확장성 우위 확인)</div>
+              <div class="challenge-arch">
+                <div class="challenge-arch-label">아키텍처</div>
+                <div class="challenge-arch-imgs">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-1.png" alt="검색 최적화 아키텍처">
+                </div>
+              </div>
             </div>
           </div>
-          <div class="project-detail-row">
-            <div class="project-detail-label">STACK</div>
-            <div class="project-detail-content">
-              <div class="project-stack-tags">
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java 17</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot 3</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/elasticsearch/005571" alt="">Elasticsearch</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/apachekafka/231F20" alt="">Kafka</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="">PostgreSQL</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/redis/FF4438" alt="">Redis</span>
-                <span class="project-stack-tag">Resilience4j</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="">Docker</span>
+
+          <div class="challenge-item">
+            <div class="challenge-idx">02</div>
+            <div>
+              <div class="challenge-headline">ES Dynamic Mapping nori 누락 — @PostConstruct 초기화 순서 보장</div>
+              <div class="challenge-body">
+                <div class="cb-row"><span class="cb-label">문제</span>Kafka consumer가 인덱스 초기화보다 먼저 실행되어 nori 빠진 매핑이 디스크에 영속화 — 재시작해도 복원 불가</div>
+                <div class="cb-row"><span class="cb-label">해결</span>ApplicationRunner는 Kafka 시작 순서 보장 불가 → @PostConstruct로 전환, bean 생성 시점에 인덱스 초기화 선행 보장</div>
+              </div>
+              <div class="challenge-result">명시적 매핑 선생성으로 Dynamic Mapping 차단 · 재발 방지 설계</div>
+              <div class="challenge-arch">
+                <div class="challenge-arch-label">아키텍처</div>
+                <div class="challenge-arch-imgs">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-2-1.png" alt="Dynamic Mapping 문제 아키텍처">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-2-2.png" alt="Dynamic Mapping 해결 아키텍처">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="challenge-item">
+            <div class="challenge-idx">03</div>
+            <div>
+              <div class="challenge-headline">ES 단일 장애점(SPOF) 제거 — Resilience4j 서킷 브레이커 + Fallback</div>
+              <div class="challenge-body">
+                <div class="cb-row"><span class="cb-label">문제</span>socket-timeout 미설정으로 ES 장애 시 스레드가 무한 대기 → 서비스 전체 성능 저하</div>
+                <div class="cb-row"><span class="cb-label">해결</span>socket-timeout 2s로 선제 차단 후 @CircuitBreaker 적용, 장애 감지 즉시 PostgreSQL fallback 전환. 카오스 테스트로 CB 상태 전이 검증</div>
+              </div>
+              <div class="challenge-result">장애 중 실패율 0% · 최대 지연 3,259ms → 2,000ms 단축</div>
+              <div class="challenge-arch">
+                <div class="challenge-arch-label">아키텍처</div>
+                <div class="challenge-arch-imgs">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-3.png" alt="서킷 브레이커 아키텍처">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="challenge-item">
+            <div class="challenge-idx">04</div>
+            <div>
+              <div class="challenge-headline">MSA 데이터 정합성 — Outbox 패턴으로 이벤트 유실 0% 보장</div>
+              <div class="challenge-body">
+                <div class="cb-row"><span class="cb-label">문제</span>MSA 환경에서 글로벌 트랜잭션 불가 — Kafka 발행 실패 시 DB는 변경됐으나 이벤트 미발행으로 데이터 불일치 발생</div>
+                <div class="cb-row"><span class="cb-label">해결</span>동일 트랜잭션 안에 outbox_events 저장으로 원자적 처리, 스케줄러 1초 폴링으로 재발행. FOR UPDATE SKIP LOCKED으로 중복 발행 방지, DLQ로 문제 메시지 격리</div>
+              </div>
+              <div class="challenge-result">이벤트 유실 0% · Kafka 브로커 재기동 후 자동 재발행</div>
+              <div class="challenge-arch">
+                <div class="challenge-arch-label">아키텍처</div>
+                <div class="challenge-arch-imgs">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-4.png" alt="Outbox 패턴 아키텍처">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="challenge-item">
+            <div class="challenge-idx">05</div>
+            <div>
+              <div class="challenge-headline">ES 색인 컨슈머 자연 멱등성 — 별도 인프라 없이 이중 색인 0건</div>
+              <div class="challenge-body">
+                <div class="cb-row"><span class="cb-label">문제</span>Outbox 재처리로 같은 메시지가 중복 발행될 수 있는 at-least-once 환경에서 이중 색인 위험</div>
+                <div class="cb-row"><span class="cb-label">해결</span>ES의 동일 document ID 재색인 시 upsert, deleteById 부재 시 무시되는 자연 멱등성 분석·활용. processed_events 테이블 없이 추가 인프라 0으로 해결</div>
+              </div>
+              <div class="challenge-result">이중 색인 0건 · 추가 인프라 비용 없음</div>
+              <div class="challenge-arch">
+                <div class="challenge-arch-label">아키텍처</div>
+                <div class="challenge-arch-imgs">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-5.png" alt="멱등성 아키텍처">
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
-        <span class="project-badge">🏆 최우수 프로젝트 1위</span>
-        <a href="https://github.com/prgrms-be-advdevcourse/beadv5_5_ChamomileChicken_BE"
-           target="_blank" class="btn btn-ghost" style="font-size:11px;padding:8px 16px;">GitHub ↗</a>
-      </div>
-    </div>
-    <div class="slider-wrap">
-      <div class="slider-track">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img1.png" alt="Jaba Class 스크린샷 1">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img2.png" alt="Jaba Class 스크린샷 2">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img3.png" alt="Jaba Class 스크린샷 3">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img4.png" alt="Jaba Class 스크린샷 4">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img5.png" alt="Jaba Class 스크린샷 5">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img6.png" alt="Jaba Class 스크린샷 6">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img7.png" alt="Jaba Class 스크린샷 7">
-        <!-- 무한 루프용 복제 -->
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img1.png" alt="">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img2.png" alt="">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img3.png" alt="">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img4.png" alt="">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img5.png" alt="">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img6.png" alt="">
-        <img class="slider-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/img7.png" alt="">
-      </div>
-    </div>
-    <div class="project-challenges">
-      <div class="challenge-title">TECHNICAL CHALLENGES</div>
 
-      <div class="challenge-item">
-        <div class="challenge-idx">01</div>
-        <div>
-          <div class="challenge-headline">검색 트래픽 집중 — Elasticsearch 도입으로 p95 31% 개선</div>
-          <div class="challenge-body">JPA LIKE → PostgreSQL GIN 인덱스 순서로 DB 자체 최적화를 먼저 검증한 뒤 한계를 수치로 확인 후 ES 도입 결정. nori 형태소 분석기 + fuzziness:AUTO 적용으로 한국어 검색 품질 동시 확보.</div>
-          <div class="challenge-result">p95 1,879ms → 1,294ms · 실패율 0% · 데이터 100배 증가 시 ES +85% vs DB +153%</div>
-          <div class="challenge-arch">
-            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-1.png" alt="검색 최적화 아키텍처">
-          </div>
-        </div>
-      </div>
-
-      <div class="challenge-item">
-        <div class="challenge-idx">02</div>
-        <div>
-          <div class="challenge-headline">ES Dynamic Mapping nori 누락 — @PostConstruct 초기화 순서 보장</div>
-          <div class="challenge-body">Kafka consumer가 인덱스 초기화보다 먼저 실행되어 잘못된 매핑이 디스크에 영속화. @PostConstruct로 전환하여 Kafka consumer 등록 전 인덱스 초기화가 반드시 선행되도록 보장.</div>
-          <div class="challenge-result">명시적 매핑 선생성으로 Dynamic Mapping 차단 · 재발 방지 설계</div>
-          <div class="challenge-arch">
-            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-2-1.png" alt="Dynamic Mapping 문제 아키텍처">
-            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-2-2.png" alt="Dynamic Mapping 해결 아키텍처">
-          </div>
-        </div>
-      </div>
-
-      <div class="challenge-item">
-        <div class="challenge-idx">03</div>
-        <div>
-          <div class="challenge-headline">ES 단일 장애점(SPOF) 제거 — Resilience4j 서킷 브레이커 + Fallback</div>
-          <div class="challenge-body">ES 컨테이너 강제 종료(카오스 테스트)로 실제 장애 재현. socket-timeout 2s 설정으로 무한 대기 선제 차단, 장애 중 PostgreSQL fallback 조회로 무중단 제공.</div>
-          <div class="challenge-result">장애 중 실패율 0% · 최대 지연 3,259ms → 2,000ms 단축</div>
-          <div class="challenge-arch">
-            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-3.png" alt="서킷 브레이커 아키텍처">
-          </div>
-        </div>
-      </div>
-
-      <div class="challenge-item">
-        <div class="challenge-idx">04</div>
-        <div>
-          <div class="challenge-headline">MSA 데이터 정합성 — Outbox 패턴으로 이벤트 유실 0% 보장</div>
-          <div class="challenge-body">DB 저장과 Kafka 발행을 동일 트랜잭션 내 outbox_events 테이블로 원자적 처리. FOR UPDATE SKIP LOCKED으로 다중 인스턴스 중복 발행 방지, DLQ로 문제 메시지 격리.</div>
-          <div class="challenge-result">이벤트 유실 0% · Kafka 브로커 재기동 후 자동 재발행</div>
-          <div class="challenge-arch">
-            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-4.png" alt="Outbox 패턴 아키텍처">
-          </div>
-        </div>
-      </div>
-
-      <div class="challenge-item">
-        <div class="challenge-idx">05</div>
-        <div>
-          <div class="challenge-headline">ES 색인 컨슈머 자연 멱등성 — 별도 인프라 없이 이중 색인 0건</div>
-          <div class="challenge-body">ES document ID upsert 특성 활용 — save/saveAll 재실행 시 덮어쓰기, deleteById 부재 시 무시. processed_events 테이블 없이 at-least-once 환경에서 중복 수신 안전성 확보.</div>
-          <div class="challenge-result">이중 색인 0건 · 추가 인프라 비용 없음</div>
-          <div class="challenge-arch">
-            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-5.png" alt="멱등성 아키텍처">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Project 2 -->
-  <div class="project-card">
-    <div class="project-header">
-      <div>
-        <div class="project-number">02</div>
-        <div class="project-title">다니엘 청년부<br />행정 관리 웹 애플리케이션</div>
-        <div class="project-meta">
-          <div class="project-meta-item">2025.12 — 2026.03</div>
-          <div class="project-meta-item">개인 프로젝트</div>
-          <div class="project-meta-item">기획 · 개발 · 운영 전담</div>
-        </div>
-        <div class="project-detail">
-          <div class="project-detail-row">
-            <div class="project-detail-label">SERVICE</div>
-            <div class="project-detail-content">
-              교회 청년부의 알림지 발행 / 출석 관리 / 소그룹 인원 분배 등 반복 행정 업무를 자동화한 웹 서비스.
-              실 사용자 대상 운영 경험 보유 (월 $5 미만 · 현재 운영 종료).
+      <!-- Project 2 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <div class="project-number">02</div>
+            <div class="project-title">다니엘 청년부<br />행정 관리 웹 애플리케이션</div>
+            <div class="project-meta">
+              <div class="project-meta-item">2025.12 — 2026.03</div>
+              <div class="project-meta-item">개인 프로젝트</div>
+              <div class="project-meta-item">기획 · 개발 · 운영 전담</div>
+            </div>
+            <div class="project-detail">
+              <div class="project-detail-row">
+                <div class="project-detail-label">SERVICE</div>
+                <div class="project-detail-content">
+                  <p>교회 청년부의 알림지 발행 / 출석 관리 / 소그룹 인원 분배 등 반복 행정 업무를 자동화한 웹 서비스.</p>
+                  <p>실 사용자 대상 운영 경험 보유 (월 $5 미만 · 현재 운영 종료).</p>
+                </div>
+              </div>
+              <div class="project-detail-row">
+                <div class="project-detail-label">ROLE</div>
+                <div class="project-detail-content">
+                  <ul>
+                    <li>기획 · 개발 · 배포 · 운영 전 과정 1인 담당</li>
+                    <li>출석 등록 Race Condition 해결 — DB Unique 제약으로 중복률 0% 달성</li>
+                    <li>1+N 쿼리 → JPA 벌크 연산 1회로 개선</li>
+                    <li>다중 필터링 기반 소그룹 자동 편성 알고리즘 설계 · 구현</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="project-detail-row">
+                <div class="project-detail-label">STACK</div>
+                <div class="project-detail-content">
+                  <div class="project-stack-tags">
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java 17</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot 3</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/thymeleaf/005F0F" alt="">Thymeleaf</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="">MySQL</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/hibernate/59666C" alt="">JPA</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/railway/0B0D0E" alt="">Railway</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="project-detail-row">
-            <div class="project-detail-label">ROLE</div>
-            <div class="project-detail-content">
-              <ul>
-                <li>기획 · 개발 · 배포 · 운영 전 과정 1인 담당</li>
-                <li>출석 등록 Race Condition 해결 — DB Unique 제약으로 중복률 0% 달성</li>
-                <li>1+N 쿼리 → JPA 벌크 연산 1회로 개선</li>
-                <li>다중 필터링 기반 소그룹 자동 편성 알고리즘 설계 · 구현</li>
-              </ul>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
+            <a href="https://github.com/xub2/youth" target="_blank"
+               class="btn btn-ghost" style="font-size:11px;padding:8px 16px;">GitHub ↗</a>
+          </div>
+        </div>
+        <div class="project-challenges">
+          <div class="challenge-title">TECHNICAL CHALLENGES</div>
+
+          <div class="challenge-item">
+            <div class="challenge-idx">01</div>
+            <div>
+              <div class="challenge-headline">동시 출석 등록 Race Condition — DB Unique 제약으로 중복률 0% 달성</div>
+              <div class="challenge-body">
+                <div class="cb-row"><span class="cb-label">문제</span>여러 관리자가 동시에 동일 인원 출석 등록 시 중복 저장 — 애플리케이션 단 검증만으로는 Race Condition 차단 불가</div>
+                <div class="cb-row"><span class="cb-label">해결</span>@Column(unique=true)로 DB 레벨 INSERT 직렬화, DataIntegrityViolationException → IllegalStateException 변환. 동명이인은 차단 대신 분기 안내로 누락 방지</div>
+              </div>
+              <div class="challenge-result">데이터 중복률 0% · 무결성 100%</div>
+              <div class="challenge-arch">
+                <div class="challenge-arch-label">아키텍처</div>
+                <div class="challenge-arch-imgs">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/2-1.png" alt="Race Condition 해결 아키텍처">
+                </div>
+              </div>
             </div>
           </div>
-          <div class="project-detail-row">
-            <div class="project-detail-label">STACK</div>
-            <div class="project-detail-content">
-              <div class="project-stack-tags">
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java 17</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot 3</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/thymeleaf/005F0F" alt="">Thymeleaf</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="">MySQL</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/hibernate/59666C" alt="">JPA</span>
-                <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/railway/0B0D0E" alt="">Railway</span>
+
+          <div class="challenge-item">
+            <div class="challenge-idx">02</div>
+            <div>
+              <div class="challenge-headline">전체 인원 일괄 갱신 1+N 쿼리 — JPA 벌크 연산으로 N회 → 1회 단축</div>
+              <div class="challenge-body">
+                <div class="cb-row"><span class="cb-label">문제</span>JPA 기본 메서드는 SELECT 1회 + UPDATE/DELETE N회로 동작 — 전체 인원 일괄 갱신 시 1+N 쿼리 발생</div>
+                <div class="cb-row"><span class="cb-label">해결</span>@Modifying(flushAutomatically=true) + 커스텀 JPQL로 영속성 컨텍스트 우회, DB에 단일 쿼리 직접 전송</div>
+              </div>
+              <div class="challenge-result">쿼리 실행 횟수 N회 → 1회</div>
+              <div class="challenge-arch">
+                <div class="challenge-arch-label">아키텍처</div>
+                <div class="challenge-arch-imgs">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/2-2.png" alt="벌크 연산 아키텍처">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="challenge-item">
+            <div class="challenge-idx">03</div>
+            <div>
+              <div class="challenge-headline">소그룹 편성 자동화 — 다중 필터링 기반 랜덤 알고리즘 구현</div>
+              <div class="challenge-body">
+                <div class="cb-row"><span class="cb-label">문제</span>매주 수동 편성으로 관리자 리소스 소모 및 인적 편향 개입 가능</div>
+                <div class="cb-row"><span class="cb-label">해결</span>isExcluded·isHard 기반 2단계 필터링 후 특수 인원 균등 선배치 → 일반 인원 라운드로빈 + Collections.shuffle(). 파이프라인 구조로 신규 조건 추가 시 확장 용이</div>
+              </div>
+              <div class="challenge-result">수동 편성 → 클릭 1회 자동화 · 편성 공평성 기술적 보장</div>
+              <div class="challenge-arch">
+                <div class="challenge-arch-label">아키텍처</div>
+                <div class="challenge-arch-imgs">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/2-3.png" alt="소그룹 편성 알고리즘 아키텍처">
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
-        <a href="https://github.com/xub2/youth" target="_blank"
-           class="btn btn-ghost" style="font-size:11px;padding:8px 16px;">GitHub ↗</a>
-      </div>
     </div>
-    <div class="project-challenges">
-      <div class="challenge-title">TECHNICAL CHALLENGES</div>
 
-      <div class="challenge-item">
-        <div class="challenge-idx">01</div>
+    <div class="full-divider"></div>
+
+    <!-- ABOUT -->
+    <div class="section-wrap" id="about">
+      <div class="section-label">ABOUT</div>
+      <h2 class="section-title">소개</h2>
+
+      <div class="about-profile">
+        <div class="contact-title">Contact</div>
+        <div class="contact-row">
+          <span class="contact-prompt">&gt;</span>
+          <span class="contact-key">NAME</span>
+          <span class="contact-dots"></span>
+          <span class="contact-val">임요섭 <span style="color:var(--text-dim)">/ Lim Yosup</span></span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-prompt">&gt;</span>
+          <span class="contact-key">EMAIL</span>
+          <span class="contact-dots"></span>
+          <a href="mailto:yoxup.lim@gmail.com" class="contact-val">yoxup.lim@gmail.com</a>
+        </div>
+        <div class="contact-row">
+          <span class="contact-prompt">&gt;</span>
+          <span class="contact-key">PHONE</span>
+          <span class="contact-dots"></span>
+          <a href="tel:01091394102" class="contact-val">010-9139-4102</a>
+        </div>
+        <div class="contact-row">
+          <span class="contact-prompt">&gt;</span>
+          <span class="contact-key">GITHUB</span>
+          <span class="contact-dots"></span>
+          <a href="https://github.com/xub2" target="_blank" class="contact-val">github.com/xub2</a>
+        </div>
+        <div class="contact-row">
+          <span class="contact-prompt">&gt;</span>
+          <span class="contact-key">BLOG</span>
+          <span class="contact-dots"></span>
+          <a href="https://bdisappointed.tistory.com" target="_blank" class="contact-val">bdisappointed.tistory.com</a>
+        </div>
+      </div>
+
+      <div class="three-col">
         <div>
-          <div class="challenge-headline">동시 출석 등록 Race Condition — DB Unique 제약으로 중복률 0% 달성</div>
-          <div class="challenge-body">@Column(unique=true)로 InnoDB 묵시적 락을 통한 INSERT 직렬화. DataIntegrityViolationException → IllegalStateException 변환. 동명이인은 차단이 아닌 분기 처리로 정상 인원 누락 방지.</div>
-          <div class="challenge-result">데이터 중복률 0% · 무결성 100%</div>
-          <div class="challenge-arch">
-            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/2-1.png" alt="Race Condition 해결 아키텍처">
+          <div class="col-label">EDUCATION</div>
+          <div class="timeline">
+            <div class="timeline-item highlight">
+              <div class="timeline-date">2026.03 — 2026.05</div>
+              <div class="timeline-name">프로그래머스 백엔드 단기심화 데브코스</div>
+              <div class="timeline-detail">팀장 · 최우수 프로젝트 (1위)</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2019.02 — 2026.03</div>
+              <div class="timeline-name">평택대학교 ICT융합학부 스마트콘텐츠전공</div>
+              <div class="timeline-detail">졸업 · 학점 4.05 / 4.5</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2016.03 — 2019.02</div>
+              <div class="timeline-name">고양 백신고등학교</div>
+              <div class="timeline-detail">졸업</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="col-label">AWARDS & CERTIFICATIONS</div>
+          <div class="timeline">
+            <div class="timeline-item highlight">
+              <div class="timeline-date">2026.05</div>
+              <div class="timeline-name">프로그래머스 데브코스 최우수 프로젝트 (1위)</div>
+              <div class="timeline-detail">(주) 그렙</div>
+            </div>
+            <div class="timeline-item highlight">
+              <div class="timeline-date">2026.05</div>
+              <div class="timeline-name">프로그래머스 데브코스 최우수 팀장</div>
+              <div class="timeline-detail">(주) 그렙</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2025.06</div>
+              <div class="timeline-name">학사 학위 논문</div>
+              <div class="timeline-detail">「REST API 기반 OWASP Top 10 보안 취약점 대응 방안 연구」</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2024.12</div>
+              <div class="timeline-name">SQL 개발자 (SQLD)</div>
+              <div class="timeline-detail">한국데이터산업진흥원</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">4년+</div>
+              <div class="timeline-name">기술 블로그 270편 이상</div>
+              <div class="timeline-detail">bdisappointed.tistory.com</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="col-label">MILITARY & ETC</div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-date">2020.07 — 2022.01</div>
+              <div class="timeline-name">육군 병장 만기 전역</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2021.12</div>
+              <div class="timeline-name">1종대형 운전면허</div>
+              <div class="timeline-detail">경찰청 (운전면허시험관리단)</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">2021.11</div>
+              <div class="timeline-name">버스운전자격</div>
+              <div class="timeline-detail">한국교통안전공단</div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="challenge-item">
-        <div class="challenge-idx">02</div>
-        <div>
-          <div class="challenge-headline">전체 인원 일괄 갱신 1+N 쿼리 — JPA 벌크 연산으로 N회 → 1회 단축</div>
-          <div class="challenge-body">@Modifying(flushAutomatically=true) + 커스텀 JPQL로 영속성 컨텍스트 우회. 대규모 갱신 시 메모리 과부하 및 트랜잭션 타임아웃 위험 사전 차단.</div>
-          <div class="challenge-result">쿼리 실행 횟수 N회 → 1회</div>
-          <div class="challenge-arch">
-            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/2-2.png" alt="벌크 연산 아키텍처">
-          </div>
-        </div>
-      </div>
-
-      <div class="challenge-item">
-        <div class="challenge-idx">03</div>
-        <div>
-          <div class="challenge-headline">소그룹 편성 자동화 — 다중 필터링 기반 랜덤 알고리즘 구현</div>
-          <div class="challenge-body">isExcluded / isHard 속성 기반 2단계 필터링 후 Collections.shuffle() 난수 배정. 특수 조건 인원을 각 목장에 균등 선배치 후 일반 인원 라운드로빈 분배. 필터링 파이프라인 구조로 신규 조건 추가 시 확장성 확보.</div>
-          <div class="challenge-result">수동 편성 → 클릭 1회 자동화 · 편성 공평성 기술적 보장</div>
-          <div class="challenge-arch">
-            <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/2-3.png" alt="소그룹 편성 알고리즘 아키텍처">
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
 
-<div class="full-divider"></div>
+    <!-- TOP BUTTON -->
+    <a href="#" class="top-btn" id="topBtn" aria-label="맨 위로">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="2,10 7,4 12,10" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      TOP
+    </a>
 
-<!-- ABOUT -->
-<div class="section-wrap" id="about">
-  <div class="section-label">ABOUT</div>
-  <h2 class="section-title">소개</h2>
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-text">© 2026 임요섭 · Backend Developer</div>
+      <div class="footer-links">
+        <a href="resume.pdf" target="_blank">이력서</a>
+        <a href="portfolio.pdf" target="_blank">포트폴리오</a>
+        <a href="https://github.com/xub2" target="_blank">GitHub</a>
+        <a href="https://bdisappointed.tistory.com" target="_blank">Blog</a>
+      </div>
+    </footer>
 
-  <div class="about-profile">
-    <img class="profile-img" src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/xuv.jpg" alt="임요섭 프로필 사진">
-    <div class="profile-info">
-      <div class="profile-name">임요섭 <span>Lim Yosup</span></div>
-      <div class="profile-row">
-        <span class="profile-label">EMAIL</span>
-        <span class="profile-value"><a href="mailto:yoxup.lim@gmail.com">yoxup.lim@gmail.com</a></span>
-      </div>
-      <div class="profile-row">
-        <span class="profile-label">PHONE</span>
-        <span class="profile-value"><a href="tel:01091394102">010-9139-4102</a></span>
-      </div>
-      <div class="profile-row">
-        <span class="profile-label">GITHUB</span>
-        <span class="profile-value"><a href="https://github.com/xub2" target="_blank">github.com/xub2</a></span>
-      </div>
-      <div class="profile-row">
-        <span class="profile-label">BLOG</span>
-        <span class="profile-value"><a href="https://bdisappointed.tistory.com" target="_blank">bdisappointed.tistory.com</a></span>
-      </div>
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+      <span class="lightbox-close" id="lightboxClose">✕</span>
+      <img id="lightboxImg" src="" alt="">
     </div>
-  </div>
 
-  <div class="three-col">
-    <div>
-      <div class="col-label">EDUCATION</div>
-      <div class="timeline">
-        <div class="timeline-item highlight">
-          <div class="timeline-date">2026.03 — 2026.05</div>
-          <div class="timeline-name">프로그래머스 백엔드 단기심화 데브코스</div>
-          <div class="timeline-detail">팀장 · 최우수 프로젝트 (1위)</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2019.02 — 2026.03</div>
-          <div class="timeline-name">평택대학교 ICT융합학부 스마트콘텐츠전공</div>
-          <div class="timeline-detail">졸업 · 학점 4.05 / 4.5</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2016.03 — 2019.02</div>
-          <div class="timeline-name">고양 백신고등학교</div>
-          <div class="timeline-detail">졸업</div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="col-label">AWARDS & CERTIFICATIONS</div>
-      <div class="timeline">
-        <div class="timeline-item highlight">
-          <div class="timeline-date">2026.05</div>
-          <div class="timeline-name">프로그래머스 데브코스 최우수 프로젝트 (1위)</div>
-          <div class="timeline-detail">(주) 그렙</div>
-        </div>
-        <div class="timeline-item highlight">
-          <div class="timeline-date">2026.05</div>
-          <div class="timeline-name">프로그래머스 데브코스 최우수 팀장</div>
-          <div class="timeline-detail">(주) 그렙</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2025.06</div>
-          <div class="timeline-name">학사 학위 논문</div>
-          <div class="timeline-detail">「REST API 기반 OWASP Top 10 보안 취약점 대응 방안 연구」</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2024.12</div>
-          <div class="timeline-name">SQL 개발자 (SQLD)</div>
-          <div class="timeline-detail">한국데이터산업진흥원</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">4년+</div>
-          <div class="timeline-name">기술 블로그 270편 이상</div>
-          <div class="timeline-detail">bdisappointed.tistory.com</div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="col-label">MILITARY & ETC</div>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-date">2020.07 — 2022.01</div>
-          <div class="timeline-name">육군 병장 만기 전역</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2021.12</div>
-          <div class="timeline-name">1종대형 운전면허</div>
-          <div class="timeline-detail">경찰청 (운전면허시험관리단)</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2021.11</div>
-          <div class="timeline-name">버스운전자격</div>
-          <div class="timeline-detail">한국교통안전공단</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    <script>
+      const toggle = document.getElementById('themeToggle');
+      const iconMoon = document.getElementById('iconMoon');
+      const iconSun  = document.getElementById('iconSun');
+      const root = document.documentElement;
 
-<!-- TOP BUTTON -->
-<a href="#" class="top-btn" id="topBtn" aria-label="맨 위로">
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <polyline points="2,10 7,4 12,10" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  TOP
-</a>
+      function setDark(dark) {
+        if (dark) {
+          root.setAttribute('data-theme', 'dark');
+          iconMoon.style.display = 'none';
+          iconSun.style.display  = 'block';
+          localStorage.setItem('theme', 'dark');
+        } else {
+          root.removeAttribute('data-theme');
+          iconMoon.style.display = 'block';
+          iconSun.style.display  = 'none';
+          localStorage.setItem('theme', 'light');
+        }
+      }
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-text">© 2026 임요섭 · Backend Developer</div>
-  <div class="footer-links">
-    <a href="resume.pdf" target="_blank">이력서</a>
-    <a href="portfolio.pdf" target="_blank">포트폴리오</a>
-    <a href="https://github.com/xub2" target="_blank">GitHub</a>
-    <a href="https://bdisappointed.tistory.com" target="_blank">Blog</a>
-  </div>
-</footer>
+      setDark(localStorage.getItem('theme') === 'dark');
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <span class="lightbox-close" id="lightboxClose">✕</span>
-  <img id="lightboxImg" src="" alt="">
-</div>
+      toggle.addEventListener('click', () => {
+        setDark(root.getAttribute('data-theme') !== 'dark');
+      });
+    </script>
 
-</body>
-<script>
-  const topBtn = document.getElementById('topBtn');
-  window.addEventListener('scroll', () => {
-    const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
-    topBtn.classList.toggle('visible', scrolledToBottom);
-  });
+    </body>
+    <script>
+      const topBtn = document.getElementById('topBtn');
+      window.addEventListener('scroll', () => {
+        const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+        topBtn.classList.toggle('visible', scrolledToBottom);
+      });
 
-  // Lightbox
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightboxImg');
+      // Lightbox
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
 
-  document.querySelectorAll('.challenge-arch img, .slider-img').forEach(img => {
-    img.addEventListener('click', () => {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-  });
+      document.querySelectorAll('.challenge-arch-imgs img, .slider-img').forEach(img => {
+        img.addEventListener('click', () => {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightbox.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
 
-  function closeLightbox() {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-  }
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
 
-  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', e => { if (e.target !== lightboxImg) closeLightbox(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-</script>
-</html>
+      document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', e => { if (e.target !== lightboxImg) closeLightbox(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    </script>
+    </html>
