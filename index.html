@@ -1351,14 +1351,17 @@
 
           /* HERO */
           .hero { padding: 80px 20px 60px; }
-          .hero-content { grid-template-columns: 1fr; gap: 28px; }
-          .hero-right-col { order: -1; min-height: unset; padding-top: 0; justify-content: center; }
-          .hero-photo { width: 130px; height: 165px; margin: 0 auto; }
-          .hero-name { font-size: clamp(56px, 16vw, 80px); }
-          .hero-divider { margin: 18px 0; }
+          .hero-content { grid-template-columns: 1fr; gap: 24px; }
+          .hero-right-col { order: -1; min-height: unset; padding-top: 0; justify-content: center; align-items: center; }
+          .hero-photo { width: 160px; height: 200px; margin: 0 auto; }
+          .hero-name { font-size: clamp(52px, 15vw, 80px); }
+          .hero-subtitle { font-size: clamp(16px, 5vw, 28px); }
+          .hero-divider { margin: 16px 0; }
+          .hero-desc { font-size: 13.5px; padding-left: 14px; }
           .hero-links { flex-direction: column; align-items: stretch; width: 100%; }
           .hero-btn-group { width: 100%; align-items: stretch; }
           .btn-download { width: 100%; box-sizing: border-box; padding: 16px 24px; font-size: 13px; }
+          .scroll-down { display: none; }
 
           /* SECTION COMMON */
           .section-wrap { padding: 64px 20px; }
@@ -1402,9 +1405,10 @@
 
           /* HERO */
           .hero { padding: 64px 16px 48px; }
-          .hero-photo { width: 110px; height: 140px; }
+          .hero-photo { width: 140px; height: 175px; }
           .hero-tag { font-size: 10px; }
-          .hero-desc { font-size: 13px; line-height: 1.8; }
+          .hero-name { font-size: clamp(48px, 14vw, 72px); }
+          .hero-desc { font-size: 13px; line-height: 1.8; padding-left: 12px; }
           .btn-download { font-size: 12px; padding: 14px 20px; }
 
           /* SECTION COMMON */
@@ -1465,7 +1469,7 @@
             Elasticsearch 도입으로 검색 병목 p95 31%를 해결했으며, Outbox 패턴으로 MSA 이벤트 유실 0건을 달성했고, Resilience4j로 장애 상황 실패율 0%를 유지했습니다.<br /><br />
             학부 시절부터 4년간 270편의 기술 블로그를 써오며 배운 것을 반드시 기록으로 남겼습니다.<br />
             또한, 팀 프로젝트에서도 README·API 명세·트러블슈팅 등 팀 MD 작성을 주도했습니다.<br /><br />
-            <span style="white-space: nowrap;">그 기록이 팀의 지식이 되는, <strong>팀의 WIKI가 되는 Java / Spring Boot 백엔드 개발자</strong>입니다.</span>
+            그 기록이 팀의 지식이 되는, <strong>팀의 WIKI가 되는 Java / Spring Boot 백엔드 개발자</strong>입니다.
           </p>
           <div class="hero-divider fade-up d5"></div>
           <div class="hero-links fade-up d5">
