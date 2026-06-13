@@ -1344,15 +1344,89 @@
 
         /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-          nav { padding: 0 20px; }
-          .hero { padding: 90px 24px 60px; }
-          .hero-content { grid-template-columns: 1fr; }
-          .hero-right-col { order: -1; min-height: 260px; }
-          .hero-photo { width: 160px; height: 200px; margin: 20px auto; }
-          .section-wrap { padding: 64px 24px; }
-          .project-header { grid-template-columns: 1fr; padding: 28px 24px 20px; }
-          .project-challenges { padding: 0 24px 28px; }
-          footer { padding: 28px 24px; }
+          /* NAV */
+          nav { padding: 0 16px; }
+          .nav-links { gap: 16px; }
+          .nav-links a { font-size: 10px; letter-spacing: 0.06em; }
+
+          /* HERO */
+          .hero { padding: 80px 20px 60px; }
+          .hero-content { grid-template-columns: 1fr; gap: 28px; }
+          .hero-right-col { order: -1; min-height: unset; padding-top: 0; justify-content: center; }
+          .hero-photo { width: 130px; height: 165px; margin: 0 auto; }
+          .hero-name { font-size: clamp(56px, 16vw, 80px); }
+          .hero-divider { margin: 18px 0; }
+          .hero-links { flex-direction: column; align-items: stretch; width: 100%; }
+          .hero-btn-group { width: 100%; align-items: stretch; }
+          .btn-download { width: 100%; box-sizing: border-box; padding: 16px 24px; font-size: 13px; }
+
+          /* SECTION COMMON */
+          .section-wrap { padding: 64px 20px; }
+          .section-title { margin-bottom: 36px; }
+
+          /* SKILLS */
+          .skill-card { padding: 20px; }
+
+          /* PROJECTS */
+          .project-number { font-size: 52px; }
+          .project-header { grid-template-columns: 1fr; padding: 24px 20px 16px; gap: 14px; }
+          .project-challenges { padding: 0 20px 28px; }
+          .project-detail-row { grid-template-columns: 62px 1fr; gap: 10px; }
+          .challenge-result { font-size: 12px; padding: 5px 10px; flex-wrap: wrap; }
+          .challenge-arch img { height: 64px; max-width: 130px; }
+
+          /* BLOG */
+          .blog-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+          .blog-stat-card { padding: 20px 12px; }
+          .blog-stat-number { font-size: clamp(36px, 8vw, 56px); }
+
+          /* ABOUT / CONTACT */
+          .about-profile { padding: 20px 20px; }
+          .contact-dots { min-width: 16px; margin: 0 8px; }
+          .contact-val { font-size: 12px; }
+
+          /* FOOTER */
+          footer { flex-direction: column; align-items: flex-start; padding: 28px 20px; gap: 12px; }
+          .footer-links { gap: 16px; }
+
+          /* THEME TOGGLE */
+          .theme-toggle { bottom: 20px; right: 20px; width: 42px; height: 42px; }
+        }
+
+        @media (max-width: 480px) {
+          /* NAV */
+          nav { height: 52px; }
+          .nav-logo { font-size: 11px; }
+          .nav-links { gap: 12px; }
+          .nav-links a { font-size: 9px; }
+
+          /* HERO */
+          .hero { padding: 64px 16px 48px; }
+          .hero-photo { width: 110px; height: 140px; }
+          .hero-tag { font-size: 10px; }
+          .hero-desc { font-size: 13px; line-height: 1.8; }
+          .btn-download { font-size: 12px; padding: 14px 20px; }
+
+          /* SECTION COMMON */
+          .section-wrap { padding: 52px 16px; }
+
+          /* PROJECTS */
+          .project-header { padding: 20px 16px 14px; }
+          .project-challenges { padding: 0 16px 20px; }
+          .project-detail-row { grid-template-columns: 52px 1fr; gap: 8px; }
+          .project-meta { gap: 10px; }
+
+          /* BLOG */
+          .blog-stats { grid-template-columns: 1fr; }
+          .blog-stat-card { padding: 20px 24px; }
+
+          /* ABOUT / CONTACT */
+          .contact-dots { display: none; }
+          .contact-val { margin-left: auto; font-size: 11px; }
+          .about-profile { padding: 16px; }
+
+          /* FOOTER */
+          footer { padding: 20px 16px; }
         }
       </style>
     </head>
