@@ -191,6 +191,12 @@
           align-items: flex-start;
         }
 
+        /* 데스크탑에서 투명 래퍼 — hero-left의 flex 아이템으로 직접 참여 */
+        .hero-title-group,
+        .hero-body {
+          display: contents;
+        }
+
         .hero-tag {
           font-family: 'JetBrains Mono', monospace;
           font-size: 11px;
@@ -1351,9 +1357,12 @@
 
           /* HERO */
           .hero { padding: 80px 20px 60px; }
-          .hero-content { grid-template-columns: 1fr; gap: 24px; }
-          .hero-right-col { order: -1; min-height: unset; padding-top: 0; justify-content: center; align-items: center; }
-          .hero-photo { width: 160px; height: 200px; margin: 0 auto; }
+          .hero-content { display: flex; flex-direction: column; gap: 0; }
+          .hero-left { display: contents; }
+          .hero-title-group { order: 1; display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
+          .hero-right-col { order: 2; min-height: unset; padding-top: 0; justify-content: center; align-items: center; }
+          .hero-body { order: 3; display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
+          .hero-photo { width: 160px; height: 200px; margin: 16px auto; }
           .hero-name { font-size: clamp(52px, 15vw, 80px); }
           .hero-subtitle { font-size: clamp(16px, 5vw, 28px); }
           .hero-divider { margin: 16px 0; }
@@ -1459,27 +1468,31 @@
       <div class="hero-content">
         <!-- 왼쪽 컬럼 -->
         <div class="hero-left">
-          <div class="hero-tag fade-up d1">BACKEND DEVELOPER</div>
-          <h1 class="hero-name fade-up d2">임요섭</h1>
-          <div class="hero-subtitle fade-up d3">Lim Yosup / xuv2</div>
-          <div class="hero-divider fade-up d3"></div>
-          <p class="hero-desc fade-up d4">
-            안녕하세요, 신입 백엔드 개발자 임요섭입니다.<br /><br />
-            MSA 기반 예약·결제 플랫폼에서 팀장을 맡아 검색 성능과 장애 대응을 직접 이끌었습니다.<br />
-            Elasticsearch 도입으로 검색 병목 p95 31%를 해결했으며, Outbox 패턴으로 MSA 이벤트 유실 0건을 달성했고, Resilience4j로 장애 상황 실패율 0%를 유지했습니다.<br /><br />
-            학부 시절부터 4년간 270편의 기술 블로그를 써오며 배운 것을 반드시 기록으로 남겼습니다.<br />
-            또한, 팀 프로젝트에서도 README·API 명세·트러블슈팅 등 팀 MD 작성을 주도했습니다.<br /><br />
-            그 기록이 팀의 지식이 되는, <strong>팀의 WIKI가 되는 Java / Spring Boot 백엔드 개발자</strong>입니다.
-          </p>
-          <div class="hero-divider fade-up d5"></div>
-          <div class="hero-links fade-up d5">
-            <div class="hero-btn-group">
-              <span class="hero-btn-label">RESUME</span>
-              <a href="resume.pdf" class="btn btn-primary btn-download" target="_blank">이력서 열람 ↗</a>
-            </div>
-            <div class="hero-btn-group">
-              <span class="hero-btn-label">PORTFOLIO</span>
-              <a href="portfolio.pdf" class="btn btn-secondary btn-download" target="_blank">포트폴리오 열람 ↗</a>
+          <div class="hero-title-group">
+            <div class="hero-tag fade-up d1">BACKEND DEVELOPER</div>
+            <h1 class="hero-name fade-up d2">임요섭</h1>
+            <div class="hero-subtitle fade-up d3">Lim Yosup / xuv2</div>
+          </div>
+          <div class="hero-body">
+            <div class="hero-divider fade-up d3"></div>
+            <p class="hero-desc fade-up d4">
+              안녕하세요, 신입 백엔드 개발자 임요섭입니다.<br /><br />
+              MSA 기반 예약·결제 플랫폼에서 팀장을 맡아 검색 성능과 장애 대응을 직접 이끌었습니다.<br />
+              Elasticsearch 도입으로 검색 병목 p95 31%를 해결했으며, Outbox 패턴으로 MSA 이벤트 유실 0건을 달성했고, Resilience4j로 장애 상황 실패율 0%를 유지했습니다.<br /><br />
+              학부 시절부터 4년간 270편의 기술 블로그를 써오며 배운 것을 반드시 기록으로 남겼습니다.<br />
+              또한, 팀 프로젝트에서도 README·API 명세·트러블슈팅 등 팀 MD 작성을 주도했습니다.<br /><br />
+              그 기록이 팀의 지식이 되는, <strong>팀의 WIKI가 되는 Java / Spring Boot 백엔드 개발자</strong>입니다.
+            </p>
+            <div class="hero-divider fade-up d5"></div>
+            <div class="hero-links fade-up d5">
+              <div class="hero-btn-group">
+                <span class="hero-btn-label">RESUME</span>
+                <a href="resume.pdf" class="btn btn-primary btn-download" target="_blank">이력서 열람 ↗</a>
+              </div>
+              <div class="hero-btn-group">
+                <span class="hero-btn-label">PORTFOLIO</span>
+                <a href="portfolio.pdf" class="btn btn-secondary btn-download" target="_blank">포트폴리오 열람 ↗</a>
+              </div>
             </div>
           </div>
         </div>
