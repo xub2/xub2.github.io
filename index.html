@@ -1120,6 +1120,13 @@
           border-left: 3px solid var(--navy);
           padding-left: 20px;
         }
+        .blog-story-title {
+          font-size: 16px;
+          font-weight: 700;
+          color: var(--navy);
+          margin-bottom: 14px;
+          letter-spacing: 0.02em;
+        }
         .blog-story p {
           margin-bottom: 8px;
         }
@@ -1496,11 +1503,14 @@
       </div>
 
       <div class="blog-story">
-        <p>학부 시절, 시험 대비용으로 글쓰기를 시작했습니다.</p>
-        <p>그러다 개발을 하면서 같은 에러에 반복적으로 시간을 잃는 경험을 했고, 직접 기록해둔 글 덕분에 빠르게 해결할 수 있다는 걸 깨달았습니다.</p>
-        <p>시간이 지나면서 내 글이 팀원들에게도 도움이 됐고, 문서화가 반복 질문을 줄이고 팀 전체의 능률을 올린다는 걸 직접 느꼈습니다.</p>
-        <p>그렇게 4년간 꾸준히 써온 글이 어느덧 <strong>270편</strong>이 됐습니다. 트러블슈팅 기록, 개념 정리, 구현 회고까지, 현재까지도 개발의 흔적을 남기고 있습니다.</p>
-        <p>저의 꾸준함과 잠깐의 시간이 주변에 높은 능률과 좋은 영향을 주길 기대하며 지금까지도 글을 작성하고 있습니다.</p>
+        <div class="blog-story-title">내가 문서화를 시작한 이유</div>
+        <p>같은 에러에 반복적으로 시간을 잃지 않기 위해 기록을 시작했습니다.</p>
+        <p>직접 정리한 글 덕분에 문제를 빠르게 해결할 수 있었고, 그 글이 팀원들의 반복 질문을 줄이며 팀 전체의 능률을 높이는 데도 기여했습니다.</p>
+        <br>
+        <p>개발자에게 문서화란 단순한 기록이 아닌, 경험을 팀의 자산으로 만드는 행위입니다.</p>
+        <p>그 경험을 바탕으로 4년간 트러블슈팅 기록, 개념 정리, 구현 회고를 꾸준히 써왔고, 어느새 <strong>270편</strong>이 넘었습니다.</p>
+        <br>
+        <p>지금도 개발의 흔적을 기록하며, 한 편의 글이 저를 포함한 누군가의 시간을 아껴줄 수 있다는 생각으로 계속 써나가고 있습니다.</p>
       </div>
 
       <div class="section-label" style="margin-top: 48px; font-size: 16px; font-weight: 700;">글 미리보기</div>
@@ -1560,7 +1570,7 @@
     <div class="section-wrap" id="projects">
       <div class="section-label">PROJECTS</div>
       <h2 class="section-title">프로젝트</h2>
-      <p class="section-desc">자세한 내용과 아키텍처는 포트폴리오를 참고 부탁드립니다.</p>
+      <p class="section-desc">자세한 내용과 아키텍처는 포트폴리오를 참고 부탁드립니다. <a href="portfolio.pdf" target="_blank" class="btn btn-secondary" style="font-size:11px; padding:4px 12px; margin-left:8px; vertical-align:middle;">포트폴리오 열람 ↗</a></p>
 
       <!-- Project 1 -->
       <div class="project-card">
@@ -1597,12 +1607,13 @@
                 <div class="project-detail-label">STACK</div>
                 <div class="project-detail-content">
                   <div class="project-stack-tags">
-                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java 17</span>
-                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot 3</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot</span>
                     <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/elasticsearch/005571" alt="">Elasticsearch</span>
                     <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/apachekafka/231F20" alt="">Kafka</span>
                     <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="">PostgreSQL</span>
                     <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/redis/FF4438" alt="">Redis</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/hibernate/59666C" alt="">JPA</span>
                     <span class="project-stack-tag">Resilience4j</span>
                   </div>
                 </div>
@@ -1611,7 +1622,7 @@
           </div>
           <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
             <span class="project-badge">🏆 최우수 프로젝트 1위</span>
-            <a href="https://github.com/prgrms-be-advdevcourse/beadv5_5_ChamomileChicken_BE"
+            <a href="https://github.com/prgrms-be-adv-devcourse/beadv5_5_ChamomileChicken_BE"
                target="_blank" class="btn btn-ghost" style="font-size:11px;padding:8px 16px;">GitHub ↗</a>
           </div>
         </div>
@@ -1764,8 +1775,8 @@
                 <div class="project-detail-label">STACK</div>
                 <div class="project-detail-content">
                   <div class="project-stack-tags">
-                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java 17</span>
-                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot 3</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/openjdk/E11F21" alt="">Java</span>
+                    <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/springboot/6DB33F" alt="">Spring Boot</span>
                     <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/thymeleaf/005F0F" alt="">Thymeleaf</span>
                     <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="">MySQL</span>
                     <span class="project-stack-tag"><img src="https://cdn.simpleicons.org/hibernate/59666C" alt="">JPA</span>
