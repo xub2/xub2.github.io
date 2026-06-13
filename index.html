@@ -5,7 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>임요섭 — Backend Developer</title>
       <meta property="og:title" content="임요섭 — Backend Developer" />
-      <meta property="og:description" content="MSA 기반 예약·결제 플랫폼 팀장, Java / Spring Boot 백엔드 개발자 임요섭의 포트폴리오입니다." />
+      <meta property="og:description" content="신입 백엔드 개발자 임요섭의 포트폴리오입니다." />
       <meta property="og:image" content="https://xub2.github.io/assets/images/thumbnail.png" />
       <meta property="og:url" content="https://xub2.github.io" />
       <meta property="og:type" content="website" />
@@ -253,6 +253,14 @@
           word-break: keep-all;
           text-align: left;
           margin-bottom: 32px;
+        }
+
+        /* 수치 강조 — 볼드 + 네이비 색상으로 주변 텍스트와 명확히 구분 */
+        .hero-desc strong,
+        .project-detail-content strong,
+        .challenge-headline strong {
+          color: var(--navy);
+          font-weight: 700;
         }
 
         .hero-links {
@@ -1487,10 +1495,10 @@
             <p class="hero-desc fade-up d4">
               안녕하세요, 신입 백엔드 개발자 임요섭입니다.<br /><br />
               MSA 기반 예약·결제 플랫폼에서 팀장을 맡아 검색 성능과 장애 대응을 직접 이끌었습니다.<br />
-              Elasticsearch 도입으로 검색 병목 p95 31%를 해결했으며, Outbox 패턴으로 MSA 이벤트 유실 0건을 달성했고, Resilience4j로 장애 상황 실패율 0%를 유지했습니다.<br /><br />
-              학부 시절부터 4년간 270편의 기술 블로그를 써오며 배운 것을 반드시 기록으로 남겼습니다.<br />
+              Elasticsearch 도입으로 검색 병목 <strong>p95 31%</strong>를 해결했으며, Outbox 패턴으로 MSA 이벤트 정합성을 보장했고, Resilience4j로 장애 상황 실패율 <strong>0%</strong>를 유지했습니다.<br /><br />
+              학부 시절부터 <strong>4년간</strong> <strong>270편</strong>의 기술 블로그를 써오며 배운 것을 반드시 기록으로 남겼습니다.<br />
               또한, 팀 프로젝트에서도 README·API 명세·트러블슈팅 등 팀 MD 작성을 주도했습니다.<br /><br />
-              그 기록이 팀의 지식이 되는, <strong>팀의 WIKI가 되는 Java / Spring Boot 백엔드 개발자</strong>입니다.
+              그 기록이 팀의 지식이 되어, <strong>팀의 WIKI가 되는 Java / Spring Boot 백엔드 개발자</strong>입니다.
             </p>
             <div class="hero-divider fade-up d5"></div>
             <div class="hero-links fade-up d5">
@@ -1697,9 +1705,9 @@
                   <ul>
                     <li>팀장 · Product Owner — 스프린트 운영, 요구사항 관리, 코드 리뷰 주도</li>
                     <li>Admin 서비스 전담 개발 (강사 정산, 신고 처리, 통계 대시보드)</li>
-                    <li>Elasticsearch 기반 검색 서비스 설계 · 개발 (p95 31% 개선)</li>
-                    <li>Outbox 패턴 기반 MSA 이벤트 유실 0% 설계 · 구현</li>
-                    <li>Resilience4j 서킷 브레이커로 장애 중 실패율 0% 유지</li>
+                    <li>Elasticsearch 기반 검색 서비스 설계 · 개발 (<strong>p95 31%</strong> 개선)</li>
+                    <li>Outbox 패턴으로 MSA 이벤트 원자적 발행 보장 설계 · 구현</li>
+                    <li>Resilience4j 서킷 브레이커로 장애 중 실패율 <strong>0%</strong> 유지 (카오스 테스트 기준)</li>
                   </ul>
                 </div>
               </div>
@@ -1751,7 +1759,7 @@
           <div class="challenge-item">
             <div class="challenge-idx">01</div>
             <div>
-              <div class="challenge-headline">검색 트래픽 집중 — Elasticsearch 도입으로 p95 31% 개선</div>
+              <div class="challenge-headline">검색 트래픽 집중 — Elasticsearch 도입으로 <strong>p95 31%</strong> 개선</div>
               <div class="challenge-body">
                 <div class="cb-row"><span class="cb-label">문제</span>JPA LIKE는 앞 와일드카드로 인해 Full Table Scan — 트래픽 집중 시 성능 저하</div>
                 <div class="cb-row"><span class="cb-label">해결</span>GIN 인덱스로 12% 개선했으나 실패 14건 발생, 수치로 한계 검증 후 ES 도입. nori + fuzziness:AUTO로 한국어 검색 품질 동시 확보</div>
@@ -1793,7 +1801,7 @@
                 <div class="cb-row"><span class="cb-label">문제</span>socket-timeout 미설정으로 ES 장애 시 스레드가 무한 대기 → 서비스 전체 성능 저하</div>
                 <div class="cb-row"><span class="cb-label">해결</span>socket-timeout 2s로 선제 차단 후 @CircuitBreaker 적용, 장애 감지 즉시 PostgreSQL fallback 전환. 카오스 테스트로 CB 상태 전이 검증</div>
               </div>
-              <div class="challenge-result">장애 중 실패율 0% · 최대 지연 3,259ms → 2,000ms 단축</div>
+              <div class="challenge-result">장애 중 실패율 0% (카오스 테스트 기준) · 최대 지연 3,259ms → 2,000ms 단축</div>
               <div class="challenge-arch">
                 <div class="challenge-arch-label">아키텍처</div>
                 <div class="challenge-arch-imgs">
@@ -1806,12 +1814,12 @@
           <div class="challenge-item">
             <div class="challenge-idx">04</div>
             <div>
-              <div class="challenge-headline">MSA 데이터 정합성 — Outbox 패턴으로 이벤트 유실 0% 보장</div>
+              <div class="challenge-headline">MSA 데이터 정합성 — Outbox 패턴으로 이벤트 원자적 발행 보장</div>
               <div class="challenge-body">
                 <div class="cb-row"><span class="cb-label">문제</span>MSA 환경에서 글로벌 트랜잭션 불가 — Kafka 발행 실패 시 DB는 변경됐으나 이벤트 미발행으로 데이터 불일치 발생</div>
                 <div class="cb-row"><span class="cb-label">해결</span>동일 트랜잭션 안에 outbox_events 저장으로 원자적 처리, 스케줄러 1초 폴링으로 재발행. FOR UPDATE SKIP LOCKED으로 중복 발행 방지, DLQ로 문제 메시지 격리</div>
               </div>
-              <div class="challenge-result">이벤트 유실 0% · Kafka 브로커 재기동 후 자동 재발행</div>
+              <div class="challenge-result">트랜잭션 내 원자적 저장 · Kafka 재기동 후 자동 재발행</div>
               <div class="challenge-arch">
                 <div class="challenge-arch-label">아키텍처</div>
                 <div class="challenge-arch-imgs">
@@ -1824,7 +1832,7 @@
           <div class="challenge-item">
             <div class="challenge-idx">05</div>
             <div>
-              <div class="challenge-headline">ES 색인 컨슈머 자연 멱등성 — 별도 인프라 없이 이중 색인 0건</div>
+              <div class="challenge-headline">ES 색인 컨슈머 자연 멱등성 — 별도 인프라 없이 이중 색인 <strong>0건</strong></div>
               <div class="challenge-body">
                 <div class="cb-row"><span class="cb-label">문제</span>Outbox 재처리로 같은 메시지가 중복 발행될 수 있는 at-least-once 환경에서 이중 색인 위험</div>
                 <div class="cb-row"><span class="cb-label">해결</span>ES의 동일 document ID 재색인 시 upsert, deleteById 부재 시 무시되는 자연 멱등성 분석·활용. processed_events 테이블 없이 추가 인프라 0으로 해결</div>
@@ -1865,8 +1873,8 @@
                 <div class="project-detail-content">
                   <ul>
                     <li>기획 · 개발 · 배포 · 운영 전 과정 1인 담당</li>
-                    <li>출석 등록 Race Condition 해결 — DB Unique 제약으로 중복률 0% 달성</li>
-                    <li>1+N 쿼리 → JPA 벌크 연산 1회로 개선</li>
+                    <li>출석 등록 Race Condition 해결 — DB Unique 제약으로 중복률 <strong>0%</strong> 달성</li>
+                    <li><strong>1+N</strong> 쿼리 → JPA 벌크 연산 <strong>1회</strong>로 개선</li>
                     <li>다중 필터링 기반 소그룹 자동 편성 알고리즘 설계 · 구현</li>
                   </ul>
                 </div>
@@ -1897,7 +1905,7 @@
           <div class="challenge-item">
             <div class="challenge-idx">01</div>
             <div>
-              <div class="challenge-headline">동시 출석 등록 Race Condition — DB Unique 제약으로 중복률 0% 달성</div>
+              <div class="challenge-headline">동시 출석 등록 Race Condition — DB Unique 제약으로 중복률 <strong>0%</strong> 달성</div>
               <div class="challenge-body">
                 <div class="cb-row"><span class="cb-label">문제</span>여러 관리자가 동시에 동일 인원 출석 등록 시 중복 저장 — 애플리케이션 단 검증만으로는 Race Condition 차단 불가</div>
                 <div class="cb-row"><span class="cb-label">해결</span>@Column(unique=true)로 DB 레벨 INSERT 직렬화, DataIntegrityViolationException → IllegalStateException 변환. 동명이인은 차단 대신 분기 안내로 누락 방지</div>
@@ -1915,7 +1923,7 @@
           <div class="challenge-item">
             <div class="challenge-idx">02</div>
             <div>
-              <div class="challenge-headline">전체 인원 일괄 갱신 1+N 쿼리 — JPA 벌크 연산으로 N회 → 1회 단축</div>
+              <div class="challenge-headline">전체 인원 일괄 갱신 <strong>1+N</strong> 쿼리 — JPA 벌크 연산으로 <strong>N회 → 1회</strong> 단축</div>
               <div class="challenge-body">
                 <div class="cb-row"><span class="cb-label">문제</span>JPA 기본 메서드는 SELECT 1회 + UPDATE/DELETE N회로 동작 — 전체 인원 일괄 갱신 시 1+N 쿼리 발생</div>
                 <div class="cb-row"><span class="cb-label">해결</span>@Modifying(flushAutomatically=true) + 커스텀 JPQL로 영속성 컨텍스트 우회, DB에 단일 쿼리 직접 전송</div>
