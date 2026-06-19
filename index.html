@@ -1057,42 +1057,39 @@
 
         /* ── BLOG ── */
         .blog-stats {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 16px;
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 0;
           margin-bottom: 48px;
         }
 
         .blog-stat-card {
-          background: var(--navy);
-          border-radius: 6px;
-          padding: 32px 28px;
-          text-align: center;
-          position: relative;
-          overflow: hidden;
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
+          padding-right: 24px;
+          margin-right: 24px;
+          border-right: 1px solid var(--border);
         }
-        .blog-stat-card::before {
-          content: '';
-          position: absolute;
-          top: -30px; right: -30px;
-          width: 100px; height: 100px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.04);
+        .blog-stat-card:last-child {
+          border-right: none;
+          padding-right: 0;
+          margin-right: 0;
         }
 
         .blog-stat-number {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(48px, 6vw, 72px);
-          color: #fff;
-          line-height: 1;
-          margin-bottom: 6px;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--navy);
           letter-spacing: 0.03em;
         }
 
         .blog-stat-label {
           font-family: 'JetBrains Mono', monospace;
           font-size: 10px;
-          color: rgba(255,255,255,0.5);
+          color: var(--text-muted);
           letter-spacing: 0.2em;
         }
 
@@ -1228,9 +1225,6 @@
           letter-spacing: 0.05em;
         }
 
-        @media (max-width: 768px) {
-          .blog-stats { grid-template-columns: 1fr; }
-        }
 
         /* ── IMAGE SLIDER ── */
         .slider-wrap {
@@ -1404,11 +1398,6 @@
           .challenge-result { font-size: 12px; padding: 5px 10px; flex-wrap: wrap; }
           .challenge-arch img { height: 64px; max-width: 130px; }
 
-          /* BLOG */
-          .blog-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-          .blog-stat-card { padding: 20px 12px; }
-          .blog-stat-number { font-size: clamp(36px, 8vw, 56px); }
-
           /* ABOUT / CONTACT */
           .about-profile { padding: 20px 20px; }
           .contact-dots { min-width: 16px; margin: 0 8px; }
@@ -1445,10 +1434,6 @@
           .project-challenges { padding: 0 16px 20px; }
           .project-detail-row { grid-template-columns: 52px 1fr; gap: 8px; }
           .project-meta { gap: 10px; }
-
-          /* BLOG */
-          .blog-stats { grid-template-columns: 1fr; }
-          .blog-stat-card { padding: 20px 24px; }
 
           /* ABOUT / CONTACT */
           .contact-dots { display: none; }
