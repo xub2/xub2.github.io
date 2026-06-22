@@ -13,7 +13,7 @@
       <meta name="twitter:image" content="https://xub2.github.io/assets/images/thumbnail.png" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
       <style>
         :root {
           --bg:          #ffffff;
@@ -225,7 +225,7 @@
 
         .hero-name {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(72px, 9vw, 130px);
+          font-size: clamp(64px, 8vw, 110px);
           line-height: 0.9;
           letter-spacing: 0.02em;
           color: var(--navy);
@@ -248,7 +248,7 @@
         }
 
         .hero-desc {
-          font-size: 13.5px;
+          font-size: 15px;
           color: var(--text-muted);
           line-height: 1.9;
           border-left: 3px solid var(--navy);
@@ -286,12 +286,12 @@
         .hero-photo {
           position: relative;
           z-index: 1;
-          width: 200px;
-          height: 255px;
+          width: 230px;
+          height: 295px;
           border-radius: 12px;
           overflow: hidden;
           box-shadow: 0 16px 48px rgba(27,58,107,0.20);
-          margin: 0 24px 24px;
+          margin: 0px 24px 24px;
         }
         .hero-photo img {
           width: 100%;
@@ -539,7 +539,7 @@
         }
 
         .section-desc {
-          font-size: 14px;
+          font-size: 15px;
           color: var(--text-muted);
           margin-top: -36px;
           margin-bottom: 40px;
@@ -639,7 +639,7 @@
           padding-top: 3px;
         }
         .project-detail-content {
-          font-size: 13px;
+          font-size: 14.5px;
           color: var(--text-muted);
           line-height: 1.75;
           word-break: keep-all;
@@ -728,7 +728,7 @@
         }
 
         .challenge-headline {
-          font-size: 15px;
+          font-size: 17px;
           font-weight: 700;
           color: var(--navy);
           margin-bottom: 6px;
@@ -736,7 +736,7 @@
         }
 
         .challenge-body {
-          font-size: 13px;
+          font-size: 14.5px;
           color: var(--text-muted);
           line-height: 1.8;
         }
@@ -749,7 +749,7 @@
     }
     .cb-label {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--navy-mid);
       letter-spacing: 0.05em;
@@ -764,7 +764,7 @@
           gap: 6px;
           margin-top: 10px;
           font-family: 'JetBrains Mono', monospace;
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 700;
           color: var(--navy);
           background: var(--navy-pale);
@@ -774,7 +774,7 @@
         }
         .challenge-result::before {
           content: '결과 ▶';
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 700;
           margin-right: 2px;
         }
@@ -851,6 +851,154 @@
         }
         .lightbox-close:hover { opacity: 1; }
 
+        /* ── SIDE NAV ── */
+        .side-nav {
+          position: fixed;
+          right: 24px;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 90;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          align-items: flex-end;
+        }
+        @media (max-width: 1100px) { .side-nav { display: none; } }
+
+        .side-nav-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+          text-decoration: none;
+        }
+        .side-nav-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          color: var(--navy-mid);
+          opacity: 0;
+          transform: translateX(6px);
+          transition: opacity 0.2s, transform 0.2s;
+          white-space: nowrap;
+          pointer-events: none;
+        }
+        .side-nav-item:hover .side-nav-label,
+        .side-nav-item.active .side-nav-label {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        .side-nav-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--border);
+          border: 1.5px solid var(--text-dim);
+          transition: background 0.2s, border-color 0.2s, transform 0.2s;
+          flex-shrink: 0;
+        }
+        .side-nav-item:hover .side-nav-dot {
+          background: var(--navy-light);
+          border-color: var(--navy-light);
+          transform: scale(1.3);
+        }
+        .side-nav-item.active .side-nav-dot {
+          background: var(--navy);
+          border-color: var(--navy);
+          transform: scale(1.4);
+        }
+
+        /* ── AI WORKFLOW ── */
+        .ai-list {
+          margin-top: 0;
+          display: flex;
+          flex-direction: column;
+        }
+        .ai-list .challenge-body ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        .ai-list .challenge-body li {
+          padding-left: 16px;
+          position: relative;
+          margin-bottom: 4px;
+          line-height: 1.75;
+        }
+        .ai-list .challenge-body li::before {
+          content: '—';
+          position: absolute;
+          left: 0;
+          color: var(--navy-light);
+          font-size: 11px;
+          top: 3px;
+        }
+        .karpathy-details {
+          margin-top: 10px;
+        }
+        .karpathy-details summary {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          font-weight: 700;
+          color: var(--navy-mid);
+          letter-spacing: 0.05em;
+          cursor: pointer;
+          user-select: none;
+          list-style: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .karpathy-details summary::-webkit-details-marker { display: none; }
+        .karpathy-details summary::before {
+          content: '▶';
+          font-size: 8px;
+          transition: transform 0.2s;
+        }
+        .karpathy-details[open] summary::before {
+          transform: rotate(90deg);
+        }
+        .karpathy-details summary:hover { color: var(--navy); }
+        .karpathy-body {
+          margin-top: 10px;
+          padding: 14px 16px;
+          background: var(--navy-xpale);
+          border-left: 3px solid var(--navy-light);
+          border-radius: 0 6px 6px 0;
+          font-size: 13px;
+          color: var(--text-muted);
+          line-height: 1.75;
+        }
+        .karpathy-body p {
+          margin-bottom: 8px;
+        }
+        .karpathy-body ol {
+          padding-left: 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        #ai-workflow .section-title {
+          margin-bottom: 28px;
+        }
+
+        .ai-section-sub {
+          font-size: 15px;
+          font-weight: 500;
+          color: var(--navy-mid);
+          margin-top: 0;
+          margin-bottom: 28px;
+          letter-spacing: 0.01em;
+          line-height: 1.6;
+          border-left: 4px solid var(--navy);
+          background: var(--navy-xpale);
+          padding: 12px 18px;
+          border-radius: 0 6px 6px 0;
+          display: inline-block;
+        }
+
         /* ── ABOUT ── */
         .info-grid {
           display: grid;
@@ -921,7 +1069,7 @@
         .contact-row:last-child { border-bottom: none; }
 
         .contact-prompt {
-          font-size: 13px;
+          font-size: 15px;
           color: var(--navy-light);
           font-weight: 700;
           margin-right: 16px;
@@ -945,7 +1093,7 @@
         }
 
         .contact-val {
-          font-size: 13px;
+          font-size: 15px;
           color: var(--navy);
           text-decoration: none;
           font-weight: 400;
@@ -1023,14 +1171,14 @@
         }
 
         .timeline-name {
-          font-size: 14px;
+          font-size: 15px;
           font-weight: 700;
           color: var(--navy);
           margin-bottom: 3px;
         }
 
         .timeline-detail {
-          font-size: 13px;
+          font-size: 14px;
           color: var(--text-muted);
         }
 
@@ -1143,7 +1291,7 @@
         }
 
         .blog-story {
-          font-size: 14px;
+          font-size: 15px;
           color: var(--text-muted);
           line-height: 2;
           margin-bottom: 48px;
@@ -1463,6 +1611,7 @@
       <div class="nav-links">
         <a href="#blog">BLOG</a>
         <a href="#projects">PROJECTS</a>
+        <a href="#ai-workflow">AI</a>
         <a href="#about">ABOUT</a>
         <a href="#skills">SKILLS</a>
       </div>
@@ -1471,6 +1620,30 @@
       <svg id="iconMoon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
       <svg id="iconSun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
+
+    <!-- SIDE NAV -->
+    <div class="side-nav" id="sideNav">
+      <a class="side-nav-item" href="#blog">
+        <span class="side-nav-label">HELLO</span>
+        <span class="side-nav-dot"></span>
+      </a>
+      <a class="side-nav-item" href="#projects">
+        <span class="side-nav-label">PROJECTS</span>
+        <span class="side-nav-dot"></span>
+      </a>
+      <a class="side-nav-item" href="#ai-workflow">
+        <span class="side-nav-label">AI</span>
+        <span class="side-nav-dot"></span>
+      </a>
+      <a class="side-nav-item" href="#about">
+        <span class="side-nav-label">ABOUT</span>
+        <span class="side-nav-dot"></span>
+      </a>
+      <a class="side-nav-item" href="#skills">
+        <span class="side-nav-label">SKILLS</span>
+        <span class="side-nav-dot"></span>
+      </a>
+    </div>
 
     <!-- HERO -->
     <div class="hero">
@@ -1488,7 +1661,7 @@
           <div class="hero-body">
             <div class="hero-divider fade-up d3"></div>
             <div class="hero-desc fade-up d4">
-              <div class="blog-story-title">Introduction</div>
+              <div class="blog-story-title" style="font-size:22px; font-weight:900;">Introduction</div>
               데브 코스에서 팀장으로 MSA 프로젝트를 경험하며 <strong>최우수 프로젝트</strong>를 달성했습니다.<br /><br />
               그 과정에서 새로운 도구보다 <strong>지금 가진 것으로 먼저 풀 수 있는가</strong>를 항상 먼저 고민했습니다.<br />
               그 고민을 꾸준히 문서로 남기면서, 현재는 <strong>AI 활용의 중요한 컨텍스트</strong>로도 활용하고 있습니다.<br /><br />
@@ -1546,7 +1719,7 @@
       </div>
 
       <div class="blog-story">
-        <div class="blog-story-title">문서화를 시작한 이유</div>
+        <div class="blog-story-title" style="font-size:22px; font-weight:900;">문서화를 시작한 이유</div>
         <p>같은 에러에 반복적으로 시간을 잃지 않기 위해 기록을 시작했습니다.</p>
         <p>직접 정리한 글 덕분에 문제를 빠르게 해결할 수 있었고, 그 글이 팀원들의 반복 질문을 줄이며 팀 전체의 능률을 높이는 데도 기여했습니다.</p>
         <br>
@@ -1884,6 +2057,112 @@
 
     <div class="full-divider"></div>
 
+    <!-- AI WORKFLOW -->
+    <div class="section-wrap" id="ai-workflow">
+      <div class="section-label">AI WORKFLOW</div>
+      <h2 class="section-title">AI 활용 방식</h2>
+      <p class="ai-section-sub">단순한 코드 생성 도구를 넘어, AI를 다음과 같이 활용하고 있습니다.</p>
+
+      <div class="ai-list">
+
+        <div class="challenge-item fade-up">
+          <div class="challenge-idx">01</div>
+          <div>
+            <div class="challenge-headline">CLAUDE.md로 컨벤션 내재화</div>
+            <div class="challenge-body">
+              <ul>
+                <li>팀 아키텍처 제약, 커밋 컨벤션, 행동 지침을 CLAUDE.md로 코드화</li>
+                <li>7개 마이크로서비스에 걸쳐 일관된 패턴 유지</li>
+                <li>"Think Before Coding / Simplicity First / Surgical Changes" 원칙 적용</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="challenge-item fade-up">
+          <div class="challenge-idx">02</div>
+          <div>
+            <div class="challenge-headline">Karpathy Skills 적용</div>
+            <div class="challenge-body">
+              <ul>
+                <li>Andrej Karpathy가 지적한 LLM 코딩 함정(과가정·과복잡화·코드 무단 변경)을 CLAUDE.md 가이드라인으로 선제 차단</li>
+                <li>Pro 요금제 한계를 고려해 토큰 효율을 높이는 프롬프팅 구조 설계</li>
+              </ul>
+              <details class="karpathy-details">
+                <summary>Karpathy Skills 란?</summary>
+                <div class="karpathy-body">
+                  <p>Andrej Karpathy가 관찰한 LLM 코딩 함정 4가지를 CLAUDE.md로 코드화한 오픈소스. <a href="https://github.com/multica-ai/andrej-karpathy-skills" target="_blank" style="color:var(--navy-mid); text-decoration:underline;">GitHub ↗</a></p>
+                  <ol>
+                    <li><strong>과가정 차단</strong> — 불확실하면 가정하지 않고 먼저 질문</li>
+                    <li><strong>과복잡화 차단</strong> — 요청하지 않은 기능/추상화 추가 금지</li>
+                    <li><strong>코드 무단 변경 차단</strong> — 요청 범위 밖 코드 수정 금지</li>
+                    <li><strong>목표 기반 실행</strong> — "무엇을 하라" 대신 "무엇이 되어야 한다"로 지시</li>
+                  </ol>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+
+        <div class="challenge-item fade-up">
+          <div class="challenge-idx">03</div>
+          <div>
+            <div class="challenge-headline">docs/ MD로 컨텍스트 관리</div>
+            <div class="challenge-body">
+              <ul>
+                <li>잡아클래스 프로젝트에서 13개 카테고리 MD 문서화</li>
+                <li>Claude Code 세션 초기화 시 docs/를 컨텍스트로 주입해 재설명 비용 제거</li>
+                <li>팀원이 담당한 모듈도 MD 기반으로 즉시 파악</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="challenge-item fade-up">
+          <div class="challenge-idx">04</div>
+          <div>
+            <div class="challenge-headline">git 히스토리 기반 교차 검증</div>
+            <div class="challenge-body">
+              <ul>
+                <li>AI 산출물을 그대로 수용하지 않고 git log / git diff로 직접 검증</li>
+                <li>실제 사례: Admin 모듈 커넥션 풀 튜닝 수치(40→2)를 git 히스토리로 추적해 정확한 수치 도출</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="challenge-item fade-up">
+          <div class="challenge-idx">05</div>
+          <div>
+            <div class="challenge-headline">Claude App → Claude Code 2-Stage 워크플로우</div>
+            <div class="challenge-body">
+              <ul>
+                <li>설계·방향·프롬프트 설계는 Claude App에서 (대화 기반 사고)</li>
+                <li>확정된 프롬프트를 Claude Code에 전달해 실제 구현 실행</li>
+                <li><strong>"무엇을 만들지"</strong>와 <strong>"어떻게 만들지"</strong>를 분리해 AI 산출물의 품질 통제</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="challenge-item fade-up">
+          <div class="challenge-idx">06</div>
+          <div>
+            <div class="challenge-headline">위임 경계 명확화</div>
+            <div class="challenge-body">
+              <ul>
+                <li><strong>AI에 위임</strong> — 보일러플레이트 생성, JPA 코드 작성, git diff 분석, 컨벤션 적용</li>
+                <li><strong>직접 판단</strong> — 트랜잭션 경계, 락 전략, DataSource 설계, 아키텍처 결정</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="full-divider"></div>
+
     <!-- ABOUT -->
     <div class="section-wrap" id="about">
       <div class="section-label">ABOUT</div>
@@ -2136,5 +2415,32 @@
       document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
       lightbox.addEventListener('click', e => { if (e.target !== lightboxImg) closeLightbox(); });
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+      // Side nav active section tracking
+      const sideNavItems = document.querySelectorAll('.side-nav-item');
+      const sideNavSections = ['blog', 'projects', 'ai-workflow', 'about', 'skills'];
+
+      function updateSideNav() {
+        const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 80;
+        if (atBottom) {
+          const lastId = sideNavSections[sideNavSections.length - 1];
+          sideNavItems.forEach(item => {
+            item.classList.toggle('active', item.getAttribute('href') === '#' + lastId);
+          });
+          return;
+        }
+        const scrollY = window.scrollY + window.innerHeight * 0.3;
+        let current = sideNavSections[0];
+        sideNavSections.forEach(id => {
+          const el = document.getElementById(id);
+          if (el && el.offsetTop <= scrollY) current = id;
+        });
+        sideNavItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('href') === '#' + current);
+        });
+      }
+
+      window.addEventListener('scroll', updateSideNav, { passive: true });
+      updateSideNav();
     </script>
     </html>
