@@ -1611,7 +1611,7 @@
     <div class="section-wrap" id="projects">
       <div class="section-label">PROJECTS</div>
       <h2 class="section-title">프로젝트</h2>
-      <p class="section-desc">자세한 내용과 아키텍처는 포트폴리오를 참고 부탁드립니다. <a class="btn btn-secondary btn-disabled" style="font-size:11px; padding:4px 12px; margin-left:8px; vertical-align:middle;">포트폴리오 열람 ↗</a></p>
+      <p class="section-desc">자세한 내용과 아키텍처는 포트폴리오를 참고 부탁드립니다. <a href="portfolio.pdf" target="_blank" class="btn btn-secondary" style="font-size:11px; padding:4px 12px; margin-left:8px; vertical-align:middle;">포트폴리오 열람 ↗</a></p>
 
       <!-- Project 1 -->
       <div class="project-card">
@@ -1692,12 +1692,24 @@
           <div class="challenge-item">
             <div class="challenge-idx">01</div>
             <div>
-              <div class="challenge-headline">검색 트래픽 집중 — Elasticsearch 도입으로 <strong>p95 31%</strong> 개선</div>
+              <div class="challenge-headline">MD 기반 문서화 문화 구축과 Claude Code 컨텍스트 활용</div>
               <div class="challenge-body">
-                <div class="cb-row"><span class="cb-label">문제</span>JPA LIKE는 앞 와일드카드로 인해 Full Table Scan — 트래픽 집중 시 성능 저하</div>
-                <div class="cb-row"><span class="cb-label">해결</span>GIN 인덱스로 12% 개선했으나 실패 14건 발생, 수치로 한계 검증 후 ES 도입. nori + fuzziness:AUTO로 한국어 검색 품질 동시 확보</div>
+                <div class="cb-row"><span class="cb-label">문제</span>MSA 7개 서비스 분담 개발로 타 모듈 파악에 매번 시간 소요. Claude Code 세션 초기화 시 컨텍스트 재설명 비효율도 존재</div>
+                <div class="cb-row"><span class="cb-label">해결</span>별도 도구 도입 대신 Git repo 내 docs/ 폴더에 서비스별 설계 결정 / API 명세 / 장애 대응 흐름 MD 정리 (13개 카테고리 구조화). 작성한 MD를 Claude Code 컨텍스트로 활용해 타 모듈도 빠르게 파악</div>
               </div>
-              <div class="challenge-result">p95 1,879ms → 1,294ms · 실패율 0% · 데이터 100배 증가 시 응답 지연 증가율 ES +85% vs DB +153% (ES 확장성 우위 확인)</div>
+              <div class="challenge-result">팀 내 반복 질문 제거 · 기록이 쌓일수록 Claude Code 컨텍스트 품질 향상 → 팀 전체 개발 생산성 증대</div>
+            </div>
+          </div>
+
+          <div class="challenge-item">
+            <div class="challenge-idx">02</div>
+            <div>
+              <div class="challenge-headline">서버 리소스 이슈 #1 — Elasticsearch 도입 결정 과정 (<strong>p95 31%</strong> 개선)</div>
+              <div class="challenge-body">
+                <div class="cb-row"><span class="cb-label">문제</span>JPA LIKE %keyword% 앞 와일드카드로 Full Table Scan — 유명 셀러 클래스 오픈 시 단시간 트래픽 집중, 데이터 규모 증가 시 선형 비용 증가</div>
+                <div class="cb-row"><span class="cb-label">해결</span>t3.large 리소스 제약으로 ES 도입 전 PostgreSQL pg_trgm GIN 인덱스로 먼저 검증 (p95 12% 개선, 극한 부하 실패 14건). 수치로 한계 확인 후 ES 도입, nori 형태소 분석기로 한국어 전문 검색 지원</div>
+              </div>
+              <div class="challenge-result">p95 1,879ms → 1,294ms (Full Scan 대비 31% 개선) · 실패율 0% · 데이터 100배 증가 시 ES +85% vs DB +153% (ES 확장 안정성 확인)</div>
               <div class="challenge-arch">
                 <div class="challenge-arch-label">아키텍처</div>
                 <div class="challenge-arch-imgs">
@@ -1708,33 +1720,14 @@
           </div>
 
           <div class="challenge-item">
-            <div class="challenge-idx">02</div>
-            <div>
-              <div class="challenge-headline">ES Dynamic Mapping nori 누락 — @PostConstruct 초기화 순서 보장</div>
-              <div class="challenge-body">
-                <div class="cb-row"><span class="cb-label">문제</span>Kafka consumer가 인덱스 초기화보다 먼저 실행되어 nori 빠진 매핑이 디스크에 영속화 — 재시작해도 복원 불가</div>
-                <div class="cb-row"><span class="cb-label">해결</span>ApplicationRunner는 Kafka 시작 순서 보장 불가 → @PostConstruct로 전환, bean 생성 시점에 인덱스 초기화 선행 보장</div>
-              </div>
-              <div class="challenge-result">명시적 매핑 선생성으로 Dynamic Mapping 차단 · 재발 방지 설계</div>
-              <div class="challenge-arch">
-                <div class="challenge-arch-label">아키텍처</div>
-                <div class="challenge-arch-imgs">
-                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-2-1.png" alt="Dynamic Mapping 문제 아키텍처">
-                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-2-2.png" alt="Dynamic Mapping 해결 아키텍처">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="challenge-item">
             <div class="challenge-idx">03</div>
             <div>
-              <div class="challenge-headline">ES 단일 장애점(SPOF) 제거 — Resilience4j 서킷 브레이커 + Fallback</div>
+              <div class="challenge-headline">서버 리소스 이슈 #2 — 단일 ES 노드 SPOF 제거, Resilience4j 서킷 브레이커 + Fallback</div>
               <div class="challenge-body">
-                <div class="cb-row"><span class="cb-label">문제</span>socket-timeout 미설정으로 ES 장애 시 스레드가 무한 대기 → 서비스 전체 성능 저하</div>
-                <div class="cb-row"><span class="cb-label">해결</span>socket-timeout 2s로 선제 차단 후 @CircuitBreaker 적용, 장애 감지 즉시 PostgreSQL fallback 전환. 카오스 테스트로 CB 상태 전이 검증</div>
+                <div class="cb-row"><span class="cb-label">문제</span>검색 로직 전체를 ES에 위임한 구조 → ES 장애 시 검색 API 전체 오류(SPOF). t3.large 리소스 제약으로 ES 노드 추가 불가</div>
+                <div class="cb-row"><span class="cb-label">해결</span>Resilience4j Circuit Breaker 적용, ES 장애 감지 즉시 PostgreSQL fallback 전환. ES 컨테이너 강제 종료 카오스 테스트로 CB 상태 전이(OPEN → HALF_OPEN → CLOSED) 검증</div>
               </div>
-              <div class="challenge-result">장애 중 실패율 0% (카오스 테스트 기준) · 최대 지연 3,259ms → 2,000ms 단축</div>
+              <div class="challenge-result">ES 장애 중 검색 API 실패율 0% (fallback 응답 지속) · ES 복구 후 CB 자동 전환 확인</div>
               <div class="challenge-arch">
                 <div class="challenge-arch-label">아키텍처</div>
                 <div class="challenge-arch-imgs">
@@ -1747,16 +1740,17 @@
           <div class="challenge-item">
             <div class="challenge-idx">04</div>
             <div>
-              <div class="challenge-headline">MSA 데이터 정합성 — Outbox 패턴으로 이벤트 원자적 발행 보장</div>
+              <div class="challenge-headline">검색 기능 장애 대응 — Race Condition으로 인한 ES Dynamic Mapping 문제</div>
               <div class="challenge-body">
-                <div class="cb-row"><span class="cb-label">문제</span>MSA 환경에서 글로벌 트랜잭션 불가 — Kafka 발행 실패 시 DB는 변경됐으나 이벤트 미발행으로 데이터 불일치 발생</div>
-                <div class="cb-row"><span class="cb-label">해결</span>동일 트랜잭션 안에 outbox_events 저장으로 원자적 처리, 스케줄러 1초 폴링으로 재발행. FOR UPDATE SKIP LOCKED으로 중복 발행 방지, DLQ로 문제 메시지 격리</div>
+                <div class="cb-row"><span class="cb-label">문제</span>매일 EC2 재시작 시 Kafka consumer가 인덱스 초기화보다 먼저 실행되어 nori 빠진 매핑이 디스크에 영속화 — 재시작해도 복원 불가, 한국어 형태소 분석 장애로 이어짐</div>
+                <div class="cb-row"><span class="cb-label">해결</span>@PostConstruct로 전환해 bean 생성 시점에 인덱스 초기화를 Kafka consumer 등록 전 반드시 선행 보장. @Document, @Setting, @Field로 명시적 매핑 정의 → Dynamic Mapping 원천 차단</div>
               </div>
-              <div class="challenge-result">트랜잭션 내 원자적 저장 · Kafka 재기동 후 자동 재발행</div>
+              <div class="challenge-result">Race Condition 근본 원인 제거 · 명시적 매핑으로 nori 분석기 누락 재발 방지</div>
               <div class="challenge-arch">
                 <div class="challenge-arch-label">아키텍처</div>
                 <div class="challenge-arch-imgs">
-                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-4.png" alt="Outbox 패턴 아키텍처">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-2-1.png" alt="Dynamic Mapping 문제 아키텍처">
+                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-2-2.png" alt="Dynamic Mapping 해결 아키텍처">
                 </div>
               </div>
             </div>
@@ -1765,18 +1759,12 @@
           <div class="challenge-item">
             <div class="challenge-idx">05</div>
             <div>
-              <div class="challenge-headline">ES 색인 컨슈머 자연 멱등성 — 별도 인프라 없이 이중 색인 <strong>0건</strong></div>
+              <div class="challenge-headline">Admin 모듈 다중 도메인 DataSource 통합과 커넥션 풀 최적화</div>
               <div class="challenge-body">
-                <div class="cb-row"><span class="cb-label">문제</span>Outbox 재처리로 같은 메시지가 중복 발행될 수 있는 at-least-once 환경에서 이중 색인 위험</div>
-                <div class="cb-row"><span class="cb-label">해결</span>ES의 동일 document ID 재색인 시 upsert, deleteById 부재 시 무시되는 자연 멱등성 분석·활용. processed_events 테이블 없이 추가 인프라 0으로 해결</div>
+                <div class="cb-row"><span class="cb-label">문제</span>Admin 서비스는 5개 도메인 테이블에 동시 접근 필요. 초기 도메인별 DataSource 4개 분리 구성으로 HikariCP 기본값(10개)씩 점유 → 이론상 최대 40개 커넥션 점유</div>
+                <div class="cb-row"><span class="cb-label">해결</span>AdminDataSourceConfig 하나로 통합 (5개 도메인 단일 풀 공유), TransactionManager도 1개로 정리. Admin 트래픽 특성(저트래픽·조회 위주) 고려해 maximum-pool-size: 2 / minimum-idle: 1로 튜닝</div>
               </div>
-              <div class="challenge-result">이중 색인 0건 · 추가 인프라 비용 없음</div>
-              <div class="challenge-arch">
-                <div class="challenge-arch-label">아키텍처</div>
-                <div class="challenge-arch-imgs">
-                  <img src="https://raw.githubusercontent.com/xub2/xub2.github.io/main/assets/images/jabaclass/arch/1-5.png" alt="멱등성 아키텍처">
-                </div>
-              </div>
+              <div class="challenge-result">최대 점유 커넥션 40개 → 2개로 축소 · 단일 DB 커넥션 리소스 효율화</div>
             </div>
           </div>
         </div>
@@ -1970,7 +1958,7 @@
             <div class="timeline-item">
               <div class="timeline-date">2025.06</div>
               <div class="timeline-name">학사 학위 논문</div>
-              <div class="timeline-detail">「REST API 기반 OWASP Top 10 보안 취약점 대응 방안 연구」</div>
+              <div class="timeline-detail">「REST API 개발을 한 OWASP Top 10 보안 취약점 대응 안 연구」</div>
             </div>
             <div class="timeline-item">
               <div class="timeline-date">2024.12</div>
