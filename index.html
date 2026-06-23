@@ -1623,8 +1623,12 @@
 
     <!-- SIDE NAV -->
     <div class="side-nav" id="sideNav">
-      <a class="side-nav-item" href="#blog">
+      <a class="side-nav-item" href="#hero">
         <span class="side-nav-label">HELLO</span>
+        <span class="side-nav-dot"></span>
+      </a>
+      <a class="side-nav-item" href="#blog">
+        <span class="side-nav-label">BLOG</span>
         <span class="side-nav-dot"></span>
       </a>
       <a class="side-nav-item" href="#projects">
@@ -1646,7 +1650,7 @@
     </div>
 
     <!-- HERO -->
-    <div class="hero">
+    <div class="hero" id="hero">
       <div class="hero-blob hero-blob-1"></div>
       <div class="hero-blob hero-blob-2"></div>
       <div class="hero-blob hero-blob-3"></div>
@@ -1703,20 +1707,20 @@
       <div class="section-label">BLOG</div>
       <h2 class="section-title">팀의 WIKI가 되는 백엔드 개발자</h2>
 
-      <div class="blog-stats">
-        <div class="blog-stat-card">
-          <div class="blog-stat-number">272+</div>
-          <div class="blog-stat-label">TOTAL POSTS</div>
-        </div>
-        <div class="blog-stat-card">
-          <div class="blog-stat-number">4+</div>
-          <div class="blog-stat-label">YEARS WRITING</div>
-        </div>
-        <div class="blog-stat-card">
-          <div class="blog-stat-number">4,800+</div>
-          <div class="blog-stat-label">TOTAL VISITORS</div>
-        </div>
-      </div>
+<!--      <div class="blog-stats">-->
+<!--        <div class="blog-stat-card">-->
+<!--          <div class="blog-stat-number">272+</div>-->
+<!--          <div class="blog-stat-label">TOTAL POSTS</div>-->
+<!--        </div>-->
+<!--        <div class="blog-stat-card">-->
+<!--          <div class="blog-stat-number">4+</div>-->
+<!--          <div class="blog-stat-label">YEARS WRITING</div>-->
+<!--        </div>-->
+<!--        <div class="blog-stat-card">-->
+<!--          <div class="blog-stat-number">4,800+</div>-->
+<!--          <div class="blog-stat-label">TOTAL VISITORS</div>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <div class="blog-story">
         <div class="blog-story-title" style="font-size:22px; font-weight:900;">문서화를 시작한 이유</div>
@@ -2418,7 +2422,7 @@
 
       // Side nav active section tracking
       const sideNavItems = document.querySelectorAll('.side-nav-item');
-      const sideNavSections = ['blog', 'projects', 'ai-workflow', 'about', 'skills'];
+      const sideNavSections = ['hero', 'blog', 'projects', 'ai-workflow', 'about', 'skills'];
 
       function updateSideNav() {
         const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 80;
