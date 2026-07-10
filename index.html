@@ -1816,9 +1816,9 @@
                 <div class="project-detail-content">
                   <ul>
                     <li>팀장 · Product Owner — 스프린트 운영, 요구사항 관리, 코드 리뷰 주도</li>
-                    <li>Admin 서비스 전담 개발 (강사 정산, 신고 처리, 통계 대시보드)</li>
+                    <li>Admin 서비스 전담 개발 (회원 관리, 정산 등 통계 대시보드)</li>
                     <li>Elasticsearch 기반 검색 서비스 설계 · 개발 (<strong>p95 31%</strong> 개선)</li>
-                    <li>Outbox 패턴으로 MSA 이벤트 원자적 발행 보장 설계 · 구현</li>
+<!--                    <li>Outbox 패턴으로 MSA 이벤트 원자적 발행 보장 설계 · 구현</li>-->
                     <li>Resilience4j 서킷 브레이커로 장애 중 실패율 <strong>0%</strong> 유지 (카오스 테스트 기준)</li>
                   </ul>
                 </div>
@@ -2046,7 +2046,7 @@
                 <div class="cb-row"><span class="cb-label">문제</span>매주 수동 편성으로 관리자 리소스 소모 및 인적 편향 개입 가능</div>
                 <div class="cb-row"><span class="cb-label">해결</span>isExcluded·isHard 기반 2단계 필터링 후 특수 인원 균등 선배치 → 일반 인원 라운드로빈 + Collections.shuffle(). 파이프라인 구조로 신규 조건 추가 시 확장 용이</div>
               </div>
-              <div class="challenge-result">수동 편성 → 클릭 1회 자동화 · 편성 공평성 기술적 보장</div>
+              <div class="challenge-result">수동 편성 → 클릭 1회 자동화 · 편성 공평성 기술적 보장 · O(N + T) ≈ O(N) 의 시간복잡도(선형 시간)로 동작</div>
               <div class="challenge-arch">
                 <div class="challenge-arch-label">아키텍처</div>
                 <div class="challenge-arch-imgs">
