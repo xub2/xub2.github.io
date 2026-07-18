@@ -6,7 +6,8 @@
       "Bash(sed -i '' 's|assets/images/286\\\\.png|assets/images/blog/286.png|g' /Users/xuv2/Desktop/study/xub2.github.io/index.html)",
       "Bash(sed -i '' 's|assets/images/284\\\\.png|assets/images/blog/284.png|g' /Users/xuv2/Desktop/study/xub2.github.io/index.html)",
       "Bash(sed -i '' 's|assets/images/img\\\\\\([0-9]*\\\\\\)\\\\.png|assets/images/jabaclass/img\\\\1.png|g' /Users/xuv2/Desktop/study/xub2.github.io/index.html)",
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "WebFetch(domain:bdisappointed.tistory.com)"
     ]
   }
 }
