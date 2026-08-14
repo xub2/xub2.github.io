@@ -1883,12 +1883,12 @@
           <div class="challenge-item">
             <div class="challenge-idx">02</div>
             <div>
-              <div class="challenge-headline">서버 리소스 이슈 #1 — Elasticsearch 도입 결정 과정 (<strong>p95 31%</strong> 개선)</div>
+              <div class="challenge-headline">서버 리소스 이슈 #1 — Elasticsearch 도입 결정 과정 (<strong>p95 98.5%</strong> 개선)</div>
               <div class="challenge-body">
-                <div class="cb-row"><span class="cb-label">문제</span>JPA LIKE %keyword% 앞 와일드카드로 Full Table Scan — 유명 셀러 클래스 오픈 시 단시간 트래픽 집중, 데이터 규모 증가 시 선형 비용 증가</div>
-                <div class="cb-row"><span class="cb-label">해결</span>t3.large 리소스 제약으로 ES 도입 전 PostgreSQL pg_trgm GIN 인덱스로 먼저 검증 (p95 12% 개선, 극한 부하 실패 14건). 수치로 한계 확인 후 ES 도입, nori 형태소 분석기로 한국어 전문 검색 지원</div>
+                <div class="cb-row"><span class="cb-label">문제</span>JPA LIKE %keyword% Full Table Scan → 100 VU 동시 요청 시 HikariCP 커넥션 풀(기본 10개) 고갈 — 90개 요청이 블로킹되고 30초 타임아웃 후 HTTP 500 폭주 (성공률 17%)</div>
+                <div class="cb-row"><span class="cb-label">해결</span>ES 도입 전 pg_trgm GIN 인덱스 검증 → EXPLAIN으로 한국어 단어(2~3자)는 trigram 선택도 부족으로 플래너가 Seq Scan 선택 확인 (성공률 오히려 17% → 13% 악화). GIN 한계를 수치로 확인 후 ES 도입 — JDBC 커넥션 풀 구조 자체 제거, nori 형태소 분석기로 한국어 전문 검색 지원</div>
               </div>
-              <div class="challenge-result">p95 1,879ms → 1,294ms (Full Scan 대비 31% 개선) · 실패율 0% · 데이터 100배 증가 시 ES +85% vs DB +153% (ES 확장 안정성 확인)</div>
+              <div class="challenge-result">1M건 · 100 VU · t3.large 환경 재현 기준 — Full Scan p95 52,777ms·성공률 17% / GIN p95 52,523ms·성공률 13% / <strong>ES p95 792ms·성공률 100%·5분 처리량 42배</strong> (Full Scan 대비 p95 98.5% 개선)</div>
               <div class="challenge-arch">
                 <div class="challenge-arch-label">아키텍처</div>
                 <div class="challenge-arch-imgs">
